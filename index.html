@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception Invitation - Abdullah Khalid</title>
+    <title>Reception Invitation - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,26 +11,38 @@
             --dark: #1a1a1a;
             --white: #ffffff;
         }
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--white);
-            color: var(--dark);
-            text-align: center;
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; }
+
+        /* Initial Landing Page Overlay */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: 0.5s;
         }
-        /* Background fix: Using a stable wedding-themed animated background */
+
+        /* Main Invitation Content (Hidden by default) */
+        #main-content { display: none; text-align: center; background-color: var(--white); color: var(--dark); }
+
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            /* Cartoonish Bride & Groom Background */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4eG5yZzRyc3R6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lTjJp9mD7A4D4A/giphy.gif');
             background-size: cover;
             background-position: center;
             color: white;
         }
+
         h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 10px 0; }
         .date-text { font-size: 1.5rem; letter-spacing: 3px; color: var(--gold); font-weight: bold; }
         
@@ -44,7 +56,7 @@
             font-weight: bold;
             transition: 0.3s;
             display: inline-block;
-            margin-top: 20px;
+            cursor: pointer;
             border: none;
         }
         .btn:hover { transform: scale(1.05); background-color: #b8962e; }
@@ -58,38 +70,51 @@
 </head>
 <body>
 
-    <section class="hero">
-        <p style="letter-spacing: 5px;">WEDDING RECEPTION</p>
-        <h1>Abdullah Khalid</h1>
-        <p class="date-text">MARCH 27, 2026 • 2:00 PM</p>
-    </section>
+    <div id="overlay">
+        <button class="btn" onclick="revealInvitation()">Open Invitation</button>
+    </div>
 
-    <section class="section">
-        <h2 style="font-family: 'Playfair Display';">Join the Celebration</h2>
-        <p>Your presence will add to the joy of our celebration. Please join us for a delightful afternoon at our reception.</p>
-        
-        <div id="countdown">
-            <div class="time-box"><span id="days">00</span>Days</div>
-            <div class="time-box"><span id="hours">00</span>Hrs</div>
-            <div class="time-box"><span id="mins">00</span>Mins</div>
-        </div>
+    <div id="main-content">
+        <section class="hero">
+            <p style="letter-spacing: 5px;">WEDDING RECEPTION</p>
+            <h1>Hafiz Muhammad Abdullah</h1>
+            <p class="date-text">MARCH 27, 2026 • 2:00 PM</p>
+        </section>
 
-        <div style="margin-top: 60px;">
-            <h3 style="font-family: 'Playfair Display';">Location</h3>
-            <p><strong>Four Seasons Restaurant</strong><br>Muhammad Bin Qasim Rd, Model Town, Bahawalpur</p>
+        <section class="section">
+            <h2 style="font-family: 'Playfair Display';">Join the Celebration</h2>
+            <p>Your presence will add to the joy of our celebration. Please join us for a delightful afternoon at our reception.</p>
             
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.357161823932!2d71.65657877546532!3d29.397214275253896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9949a986dc49%3A0xf3091f0061259377!2sFour%20Seasons%20Restaurant%20Bahawalpur!5e0!3m2!1sen!2s!4v1707200000000!5m2!1sen!2s" 
-                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
+            <div id="countdown">
+                <div class="time-box"><span id="days">00</span>Days</div>
+                <div class="time-box"><span id="hours">00</span>Hrs</div>
+                <div class="time-box"><span id="mins">00</span>Mins</div>
             </div>
-        </div>
 
-        <a href="https://forms.google.com" target="_blank" class="btn">RSVP BY MARCH 15</a>
-    </section>
+            <div style="margin-top: 60px;">
+                <h3 style="font-family: 'Playfair Display';">Location</h3>
+                <p><strong>Four Seasons Restaurant</strong><br>Muhammad Bin Qasim Rd, Model Town, Bahawalpur</p>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353386000724!2d71.67018807530614!3d29.38918237525807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9090a986dc49%3A0xf3091f4061259377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1707230000000" 
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+
+            <a href="PASTE_YOUR_GOOGLE_FORM_URL_HERE" target="_blank" class="btn" style="margin-top: 40px;">RSVP BY MARCH 15</a>
+        </section>
+    </div>
 
     <script>
+        // Reveal Logic
+        function revealInvitation() {
+            document.getElementById('overlay').style.display = 'none'; // Hide overlay
+            document.getElementById('main-content').style.display = 'block'; // Show invitation
+            updateCountdown(); // Start countdown timer
+        }
+
+        // Countdown Logic
         const targetDate = new Date("March 27, 2026 14:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -102,7 +127,6 @@
             document.getElementById("mins").innerText = m > 0 ? m : 0;
         }
         setInterval(updateCountdown, 1000);
-        updateCountdown();
     </script>
 </body>
 </html>
