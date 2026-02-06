@@ -9,19 +9,28 @@
         :root { --gold: #d4af37; --white: #ffffff; --glass: rgba(255, 255, 255, 0.9); }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
-        /* Start Screen with All 6 GIFs */
+        /* Start Screen Styling */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 2000; transition: 1s ease;
         }
-        .gif-layer { position: absolute; pointer-events: none; z-index: 10; width: clamp(120px, 25vw, 220px); }
-        .g1 { top: 0; left: 0; }            /* balloons.gif */
-        .g2 { top: 0; right: 0; }           /* audiences.gif */
-        .g3 { bottom: 0; left: 0; }         /* confetti.gif */
-        .g4 { bottom: 0; right: 0; }        /* confetti (1).gif */
-        .g5 { top: 40%; left: 0%; }         /* confetti (2).gif */
-        .g6 { top: 40%; right: 0%; }        /* confetti (3).gif */
+        
+        /* Desktop GIF sizes */
+        .gif-layer { position: absolute; pointer-events: none; z-index: 10; width: 180px; opacity: 0.8; }
+        .g1 { top: 0; left: 0; }
+        .g2 { top: 0; right: 0; }
+        .g3 { bottom: 0; left: 0; }
+        .g4 { bottom: 0; right: 0; }
+        .g5 { top: 40%; left: 0; }
+        .g6 { top: 40%; right: 0; }
+
+        /* Mobile Fix for GIFs and Text */
+        @media (max-width: 600px) {
+            .gif-layer { width: 90px; }
+            .g5, .g6 { display: none; }
+            h2.start-heading { font-size: 1.1rem; padding: 0 20px; z-index: 20; }
+        }
 
         /* Slide System */
         #main-invitation { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
@@ -38,29 +47,27 @@
         /* High-Contrast Readable Text Boxes */
         .text-box {
             background: var(--glass);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            max-width: 80%;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 85%;
             border: 2px solid var(--gold);
         }
 
-        .animate-up { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .animate-up { opacity: 0; transform: translateY(50px); transition: 1s ease-out; }
         .active .animate-up { opacity: 1; transform: translateY(0); }
 
-        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 5vw, 2.5rem); color: #1a1a1a; line-height: 1.5; margin: 0; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 4vw, 2.2rem); color: #1a1a1a; line-height: 1.5; margin: 0; }
         
         .btn {
-            background-color: var(--gold); color: white; padding: 20px 60px;
+            background-color: var(--gold); color: white; padding: 18px 50px;
             border-radius: 50px; font-weight: bold; cursor: pointer; border: none;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 2001; font-size: 1.2rem;
-            text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2001; font-size: 1.1rem;
         }
 
         .map-frame { 
-            width: 90%; max-width: 900px; height: 450px; border-radius: 30px; 
-            overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 4px solid var(--gold);
-            background: #eee;
+            width: 90%; max-width: 900px; height: 400px; border-radius: 25px; 
+            overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 3px solid var(--gold);
         }
     </style>
 </head>
@@ -74,7 +81,9 @@
         <img src="confetti (2).gif" class="gif-layer g5">
         <img src="confetti (3).gif" class="gif-layer g6">
         
-        <h2 style="margin-bottom: 40px; color: #1a1a1a; letter-spacing: 2px;">BISMILLAH-IR-RAHMAN-IR-RAHIM</h2>
+        <h2 class="start-heading" style="margin-bottom: 40px; color: #1a1a1a; letter-spacing: 2px; text-align: center;">
+            BISMILLAH-IR-RAHMAN-IR-RAHIM
+        </h2>
         <button class="btn" onclick="startExperience()">Open Invitation</button>
     </div>
 
@@ -97,30 +106,30 @@
 
         <div class="slide bg-final">
             <div class="text-box animate-up">
-                <p style="letter-spacing: 5px; font-size: 1rem; color: #666; font-weight: 600;">WEDDING RECEPTION</p>
-                <h1 style="font-family: 'Playfair Display'; font-size: clamp(2rem, 7vw, 4rem); margin: 15px 0; color: #000;">Hafiz Muhammad Abdullah</h1>
-                <p style="font-size: 1.6rem; color: var(--gold); font-weight: 700; margin-top: 5px;">MARCH 27, 2026 • 2:00 PM</p>
+                <p style="letter-spacing: 4px; font-size: 0.8rem; color: #666;">WEDDING RECEPTION</p>
+                <h1 style="font-family: 'Playfair Display'; font-size: clamp(1.8rem, 6vw, 3.5rem); margin: 10px 0; color: #1a1a1a;">Hafiz Muhammad Abdullah</h1>
+                <p style="font-size: 1.4rem; color: var(--gold); font-weight: bold;">MARCH 27, 2026 • 2:00 PM</p>
             </div>
         </div>
 
         <div class="slide bg-webp">
-            <div class="text-box animate-up" style="margin-bottom: 30px; padding: 15px 50px;">
-                <h2 style="font-size: 1.8rem;">Location & Venue</h2>
+            <div class="text-box animate-up" style="margin-bottom: 20px; padding: 10px 30px;">
+                <h2 style="font-size: 1.5rem;">Location & Venue</h2>
             </div>
             <div class="animate-up map-frame">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.104443422791!2d71.68538627532398!3d29.36647975053723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9d49a986dc49%3A0xf3091f4061259377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1707250000000!5m2!1sen!2spk" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353386000109!2d71.68884687508685!3d29.38918987526017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9d49a986dc49%3A0xf3091f4061259377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1738870000000!5m2!1sen!2spk" 
                     width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                 </iframe>
             </div>
-            <p class="animate-up" style="margin-top: 20px; font-weight: 700; background: white; padding: 10px 25px; border-radius: 15px; border: 1px solid var(--gold);">Four Seasons Restaurant, Bahawalpur</p>
+            <p class="animate-up" style="margin-top: 15px; font-weight: bold; background: white; padding: 5px 15px; border-radius: 10px; border: 1px solid var(--gold);">Four Seasons Restaurant, Bahawalpur</p>
         </div>
     </div>
 
     <script>
         function startExperience() {
             const audio = document.getElementById('invite-music');
-            audio.play().catch(e => console.log("Audio Error:", e));
+            audio.play().catch(e => console.log("Music play blocked: ", e));
 
             const overlay = document.getElementById('overlay');
             overlay.style.opacity = '0';
