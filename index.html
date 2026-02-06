@@ -6,85 +6,128 @@
     <title>Reception - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #1a1a1a; --white: #ffffff; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: var(--white); }
+        :root { --gold: #d4af37; --white: #ffffff; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
-        /* Landing Screen with GIFs */
+        /* Start Screen with All 6 GIFs */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--white); display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1000; transition: 1s ease;
+            background: var(--white); display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; z-index: 2000; transition: 1s ease;
         }
-        .gif-bg { position: absolute; width: 200px; z-index: -1; opacity: 0.6; }
-        .top-left { top: 10px; left: 10px; }
-        .top-right { top: 10px; right: 10px; }
+        .gif-layer { position: absolute; pointer-events: none; z-index: 10; opacity: 0.8; }
+        .g1 { top: 0; left: 0; width: 200px; }            /* balloons.gif */
+        .g2 { top: 0; right: 0; width: 200px; }           /* audiences.gif */
+        .g3 { bottom: 0; left: 0; width: 150px; }         /* confetti.gif */
+        .g4 { bottom: 0; right: 0; width: 150px; }        /* confetti (1).gif */
+        .g5 { top: 40%; left: 5%; width: 100px; }         /* confetti (2).gif */
+        .g6 { top: 40%; right: 5%; width: 100px; }        /* confetti (3).gif */
 
         /* Slide System */
         #main-invitation { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
         .slide { 
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 20px; box-sizing: border-box;
-            background-size: cover; background-position: center; position: relative;
+            text-align: center; background-size: cover; background-position: center;
+            position: relative; overflow: hidden;
         }
-        .slide h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); max-width: 800px; }
         
-        /* The Final Detail Slide */
-        .final-slide { 
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Bg_Image.png'); 
-            color: white; background-size: cover;
-        }
-        .final-slide h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+        /* Laptop Fit & WebP Backgrounds */
+        .bg-webp { background-image: url('Bg Slides.webp'); background-repeat: no-repeat; }
+        .bg-final { background-image: url('Bg_Image.webp'); }
 
+        /* Content Animations */
+        .animate-up { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .active .animate-up { opacity: 1; transform: translateY(0); }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 4vw, 2.5rem); color: var(--gold); max-width: 85%; line-height: 1.6; }
+        
         .btn {
-            background-color: var(--gold); color: white; padding: 15px 40px;
-            text-decoration: none; border-radius: 50px; font-weight: bold;
-            cursor: pointer; border: none; transition: 0.3s; z-index: 1001;
+            background-color: var(--gold); color: white; padding: 18px 50px;
+            border-radius: 50px; font-weight: bold; cursor: pointer; border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2001;
         }
-        .scroll-hint { position: absolute; bottom: 20px; font-size: 0.9rem; color: var(--gold); animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+        .map-frame { 
+            width: 90%; max-width: 900px; height: 400px; border-radius: 25px; 
+            overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 2px solid var(--gold);
+        }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <img src="balloons.gif" class="gif-bg top-left">
-        <img src="confetti.gif" class="gif-bg top-right">
-        <h2 style="font-family: 'Playfair Display'; margin-bottom: 30px;">A Special Invitation</h2>
+        <img src="balloons.gif" class="gif-layer g1">
+        <img src="audiences.gif" class="gif-layer g2">
+        <img src="confetti.gif" class="gif-layer g3">
+        <img src="confetti (1).gif" class="gif-layer g4">
+        <img src="confetti (2).gif" class="gif-layer g5">
+        <img src="confetti (3).gif" class="gif-layer g6">
+        
+        <h2 style="margin-bottom: 40px;">Bismillah-ir-Rahman-ir-Rahim</h2>
         <button class="btn" onclick="startExperience()">Open Invitation</button>
     </div>
 
+    <audio id="invite-music" loop>
+        <source src="fiikuri-ramadan-vibes-music-uplifting-promoti..." type="audio/mpeg">
+    </audio>
+
     <div id="main-invitation">
-        <div class="slide">
-            <h2>Bismillah-ir-Rahman-ir-Rahim</h2>
-            <div class="scroll-hint">Scroll down to read ↓</div>
+        <div class="slide bg-webp active">
+            <h2 class="animate-up">Khushion bhray is safar mein aap ki shirkat hamaray liye baais-e-musarrat hogi.</h2>
         </div>
 
-        <div class="slide">
-            <h2>Khushion bhray is safar mein aap ki shirkat hamaray liye baais-e-musarrat hogi.</h2>
+        <div class="slide bg-webp">
+            <h2 class="animate-up">Mohabbat aur duaon ke sath, hum aapko Abdullah ki reception par madu kartay hain.</h2>
         </div>
 
-        <div class="slide">
-            <h2>Mohabbat aur duaon ke sath, hum aapko Abdullah ki reception par madu kartay hain.</h2>
+        <div class="slide bg-final">
+            <div class="animate-up" style="background: rgba(255,255,255,0.85); padding: 50px; border-radius: 30px; border: 1px solid var(--gold);">
+                <p style="letter-spacing: 4px; font-size: 0.9rem;">WEDDING RECEPTION</p>
+                <h1 style="font-family: 'Playfair Display'; font-size: clamp(2rem, 6vw, 4rem); margin: 10px 0;">Hafiz Muhammad Abdullah</h1>
+                <p style="font-size: 1.5rem; color: var(--gold); font-weight: bold;">MARCH 27, 2026 • 2:00 PM</p>
+            </div>
         </div>
 
-        <div class="slide final-slide">
-            <p style="letter-spacing: 5px;">RECEPTION OF</p>
-            <h1>Hafiz Muhammad Abdullah</h1>
-            <p style="font-size: 1.5rem; color: var(--gold);">MARCH 27, 2026 • 2:00 PM</p>
-            <p><strong>Four Seasons Restaurant</strong><br>Bahawalpur</p>
+        <div class="slide bg-webp">
+            <h2 class="animate-up" style="margin-bottom: 25px;">Location & Venue</h2>
+            <div class="animate-up map-frame">
+                <iframe 
+                    src="https://www.google.com/maps/contrib/114334787938854617156/reviews" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+            <p class="animate-up" style="margin-top: 15px; font-weight: bold;">Four Seasons Restaurant, Bahawalpur</p>
         </div>
     </div>
 
     <script>
         function startExperience() {
-            document.getElementById('overlay').style.opacity = '0';
+            // Start Music
+            const audio = document.getElementById('invite-music');
+            audio.play().catch(error => console.log("Playback blocked"));
+
+            // Transition
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('overlay').style.display = 'none';
+                overlay.style.display = 'none';
                 document.getElementById('main-invitation').style.display = 'block';
-                document.body.style.overflow = 'auto';
             }, 1000);
         }
+
+        // Animation logic for slide content
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active'); // Re-animate when scrolling back
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
     </script>
 </body>
 </html>
