@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception Invitation</title>
+    <title>Reception Invitation - Abdullah Khalid</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,22 +17,26 @@
             background-color: var(--white);
             color: var(--dark);
             text-align: center;
+            overflow-x: hidden;
         }
+        /* Animated Background Section */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1350&q=80'); /* Replace with your image link */
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://cdn.pixabay.com/animation/2023/05/01/18/43/18-43-34-444_512.gif');
             background-size: cover;
             background-position: center;
             color: white;
+            position: relative;
         }
-        h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 0; }
-        .date { font-size: 1.5rem; letter-spacing: 3px; color: var(--gold); }
+        h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 10px 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .date-text { font-size: 1.5rem; letter-spacing: 3px; color: var(--gold); font-weight: bold; }
         
-        .section { padding: 80px 20px; max-width: 800px; margin: auto; }
+        .section { padding: 60px 20px; max-width: 800px; margin: auto; }
         .btn {
             background-color: var(--gold);
             color: white;
@@ -49,24 +53,26 @@
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 30px;
         }
-        .time-box { background: #f4f4f4; padding: 15px; border-radius: 10px; min-width: 70px; }
-        .time-box span { display: block; font-size: 2rem; font-weight: bold; color: var(--gold); }
+        .time-box { background: #f9f9f9; padding: 20px; border-radius: 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .time-box span { display: block; font-size: 2.2rem; font-weight: bold; color: var(--gold); }
+        
+        iframe { border: 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <p>YOU ARE INVITED TO THE RECEPTION OF</p>
-        <h1>Waleed & Partner</h1>
-        <p class="date">JUNE 15, 2026</p>
+        <p style="letter-spacing: 5px;">WEDDING RECEPTION</p>
+        <h1>Abdullah Khalid</h1>
+        <p class="date-text">MARCH 27, 2026 • 2:00 PM</p>
     </section>
 
     <section class="section">
-        <h2 style="font-family: 'Playfair Display';">The Celebration</h2>
-        <p>We are delighted to invite you to celebrate our special day. Your presence would mean the world to us.</p>
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem;">Join the Celebration</h2>
+        <p>Your presence will add to the joy of our celebration. Please join us for a delightful afternoon at our reception.</p>
         
         <div id="countdown">
             <div class="time-box"><span id="days">00</span>Days</div>
@@ -74,31 +80,38 @@
             <div class="time-box"><span id="mins">00</span>Mins</div>
         </div>
 
-        <div style="margin-top: 50px;">
-            <h3>Venue</h3>
-            <p>The Grand Marquee, Lahore<br>6:00 PM onwards</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3402.5657352352136!2d74.3413!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDMxJzEzLjQiTiA3NMKwMjAnMjguNyJF!5e0!3m2!1sen!2spk!4v1650000000000!5m2!1sen!2spk" width="100%" height="300" style="border:0; border-radius:15px;" allowfullscreen="" loading="lazy"></iframe>
+        <div style="margin-top: 60px;">
+            <h3 style="font-family: 'Playfair Display'; font-size: 1.8rem;">Location</h3>
+            <p><strong>Four Seasons Restaurant</strong><br>Muhammad Bin Qasim Rd, Model Town, Bahawalpur</p>
+            <iframe src="https://maps.google.com/?cid=17512562987375104887&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" width="100%" height="350" allowfullscreen="" loading="lazy"></iframe>
         </div>
 
-        <a href="YOUR_GOOGLE_FORM_URL_HERE" class="btn">RSVP NOW</a>
+        <a href="PASTE_YOUR_GOOGLE_FORM_URL_HERE" class="btn">RSVP BY MARCH 15</a>
     </section>
 
     <script>
-        // Countdown Logic
-        const targetDate = new Date("June 15, 2026 18:00:00").getTime();
+        const targetDate = new Date("March 27, 2026 14:00:00").getTime();
 
-        setInterval(() => {
+        function updateCountdown() {
             const now = new Date().getTime();
             const diff = targetDate - now;
+
+            if (diff < 0) {
+                document.getElementById("countdown").innerHTML = "<h3>The Celebration has Started!</h3>";
+                return;
+            }
 
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-            document.getElementById("days").innerText = d;
-            document.getElementById("hours").innerText = h;
-            document.getElementById("mins").innerText = m;
-        }, 1000);
+            document.getElementById("days").innerText = String(d).padStart(2, '0');
+            document.getElementById("hours").innerText = String(h).padStart(2, '0');
+            document.getElementById("mins").innerText = String(m).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
