@@ -6,58 +6,34 @@
     <title>Reception Invitation - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #d4af37;
-            --dark: #1a1a1a;
-            --white: #ffffff;
-        }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; }
+        :root { --gold: #d4af37; --dark: #1a1a1a; --white: #ffffff; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
 
         /* Initial Landing Page Overlay */
         #overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: 0.5s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); display: flex; justify-content: center; align-items: center;
+            z-index: 1000; transition: opacity 0.5s;
         }
 
-        /* Main Invitation Content (Hidden by default) */
-        #main-content { display: none; text-align: center; background-color: var(--white); color: var(--dark); }
+        #main-content { display: none; text-align: center; color: var(--dark); }
 
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* Cartoonish Bride & Groom Background */
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            /* Fixed Cartoonish Background Link */
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4eG5yZzRyc3R6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lTjJp9mD7A4D4A/giphy.gif');
-            background-size: cover;
-            background-position: center;
-            color: white;
+                        url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4eG5yZzRyc3R6eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lTjJp9mD7A4D4A/giphy.gif');
+            background-size: cover; background-position: center; color: white;
         }
 
         h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 10px 0; }
         .date-text { font-size: 1.5rem; letter-spacing: 3px; color: var(--gold); font-weight: bold; }
-        
         .section { padding: 60px 20px; max-width: 800px; margin: auto; }
+        
         .btn {
-            background-color: var(--gold);
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: 0.3s;
-            display: inline-block;
-            cursor: pointer;
-            border: none;
+            background-color: var(--gold); color: white; padding: 15px 40px;
+            text-decoration: none; border-radius: 50px; font-weight: bold;
+            transition: 0.3s; display: inline-block; cursor: pointer; border: none;
         }
         .btn:hover { transform: scale(1.05); background-color: #b8962e; }
         
@@ -82,7 +58,7 @@
         </section>
 
         <section class="section">
-            <h2 style="font-family: 'Playfair Display';">Join the Celebration</h2>
+            <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem;">Join the Celebration</h2>
             <p>Your presence will add to the joy of our celebration. Please join us for a delightful afternoon at our reception.</p>
             
             <div id="countdown">
@@ -92,39 +68,37 @@
             </div>
 
             <div style="margin-top: 60px;">
-                <h3 style="font-family: 'Playfair Display';">Location</h3>
+                <h3 style="font-family: 'Playfair Display'; font-size: 1.8rem;">Location</h3>
                 <p><strong>Four Seasons Restaurant</strong><br>Muhammad Bin Qasim Rd, Model Town, Bahawalpur</p>
                 <div class="map-container">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353386000724!2d71.67018807530614!3d29.38918237525807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9090a986dc49%3A0xf3091f4061259377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1707230000000" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.357161823932!2d71.65657877546532!3d29.397214275253896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9949a986dc49%3A0xf3091f0061259377!2sFour%20Seasons%20Restaurant%20Bahawalpur!5e0!3m2!1sen!2s!4v1707200000000!5m2!1sen!2s" 
                         width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                 </div>
             </div>
 
-            <a href="PASTE_YOUR_GOOGLE_FORM_URL_HERE" target="_blank" class="btn" style="margin-top: 40px;">RSVP BY MARCH 15</a>
+            <a href="PASTE_YOUR_GOOGLE_FORM_URL_HERE" target="_blank" class="btn" style="margin-top: 50px;">RSVP BY MARCH 15</a>
         </section>
     </div>
 
     <script>
-        // Reveal Logic
         function revealInvitation() {
-            document.getElementById('overlay').style.display = 'none'; // Hide overlay
-            document.getElementById('main-content').style.display = 'block'; // Show invitation
-            updateCountdown(); // Start countdown timer
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                updateCountdown();
+            }, 500);
         }
 
-        // Countdown Logic
         const targetDate = new Date("March 27, 2026 14:00:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const diff = targetDate - now;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("days").innerText = d > 0 ? d : 0;
-            document.getElementById("hours").innerText = h > 0 ? h : 0;
-            document.getElementById("mins").innerText = m > 0 ? m : 0;
+            document.getElementById("days").innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+            document.getElementById("hours").innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            document.getElementById("mins").innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
         }
         setInterval(updateCountdown, 1000);
     </script>
