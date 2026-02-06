@@ -3,113 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception Invitation - Hafiz Muhammad Abdullah</title>
+    <title>Reception - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #d4af37; --dark: #1a1a1a; --white: #ffffff; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: var(--white); }
 
-        /* Initial Landing Page Overlay */
+        /* Landing Screen with GIFs */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--white); display: flex; justify-content: center; align-items: center;
-            z-index: 1000; transition: opacity 0.8s ease;
+            background: var(--white); display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; transition: 1s ease;
         }
+        .gif-bg { position: absolute; width: 200px; z-index: -1; opacity: 0.6; }
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
 
-        /* Animated Main Content */
-        #main-content { 
-            display: none; 
-            text-align: center; 
-            color: var(--dark);
-            opacity: 0;
-            transition: opacity 1.5s ease-in;
+        /* Slide System */
+        #main-invitation { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .slide { 
+            height: 100vh; width: 100%; scroll-snap-align: start;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px; box-sizing: border-box;
+            background-size: cover; background-position: center; position: relative;
         }
-
-        .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            /* Using your uploaded repository image */
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Bg_Image.png');
-            background-size: cover; background-position: center; color: white;
-        }
-
-        h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 10px 0; }
-        .date-text { font-size: 1.5rem; letter-spacing: 3px; color: var(--gold); font-weight: bold; }
-        .section { padding: 80px 20px; max-width: 800px; margin: auto; }
+        .slide h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); max-width: 800px; }
         
+        /* The Final Detail Slide */
+        .final-slide { 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Bg_Image.png'); 
+            color: white; background-size: cover;
+        }
+        .final-slide h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+
         .btn {
             background-color: var(--gold); color: white; padding: 15px 40px;
             text-decoration: none; border-radius: 50px; font-weight: bold;
-            transition: 0.3s; display: inline-block; cursor: pointer; border: none;
+            cursor: pointer; border: none; transition: 0.3s; z-index: 1001;
         }
-        .btn:hover { transform: scale(1.05); background-color: #b8962e; }
-        
-        #countdown { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
-        .time-box { background: #f9f9f9; padding: 20px; border-radius: 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .time-box span { display: block; font-size: 2.2rem; font-weight: bold; color: var(--gold); }
-        
-        .map-container { margin-top: 30px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .scroll-hint { position: absolute; bottom: 20px; font-size: 0.9rem; color: var(--gold); animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <button class="btn" onclick="revealInvitation()">Open Invitation</button>
+        <img src="balloons.gif" class="gif-bg top-left">
+        <img src="confetti.gif" class="gif-bg top-right">
+        <h2 style="font-family: 'Playfair Display'; margin-bottom: 30px;">A Special Invitation</h2>
+        <button class="btn" onclick="startExperience()">Open Invitation</button>
     </div>
 
-    <div id="main-content">
-        <section class="hero">
-            <p style="letter-spacing: 5px;">WEDDING RECEPTION</p>
+    <div id="main-invitation">
+        <div class="slide">
+            <h2>Bismillah-ir-Rahman-ir-Rahim</h2>
+            <div class="scroll-hint">Scroll down to read ↓</div>
+        </div>
+
+        <div class="slide">
+            <h2>Khushion bhray is safar mein aap ki shirkat hamaray liye baais-e-musarrat hogi.</h2>
+        </div>
+
+        <div class="slide">
+            <h2>Mohabbat aur duaon ke sath, hum aapko Abdullah ki reception par madu kartay hain.</h2>
+        </div>
+
+        <div class="slide final-slide">
+            <p style="letter-spacing: 5px;">RECEPTION OF</p>
             <h1>Hafiz Muhammad Abdullah</h1>
-            <p class="date-text">MARCH 27, 2026 • 2:00 PM</p>
-        </section>
-
-        <section class="section">
-            <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem;">Join the Celebration</h2>
-            <p>Your presence will add to the joy of our celebration. Please join us for a delightful afternoon at our reception.</p>
-            
-            <div id="countdown">
-                <div class="time-box"><span id="days">00</span>Days</div>
-                <div class="time-box"><span id="hours">00</span>Hrs</div>
-                <div class="time-box"><span id="mins">00</span>Mins</div>
-            </div>
-
-            <div style="margin-top: 60px;">
-                <h3 style="font-family: 'Playfair Display'; font-size: 1.8rem;">Location</h3>
-                <p><strong>Four Seasons Restaurant</strong><br>Muhammad Bin Qasim Rd, Model Town, Bahawalpur</p>
-                <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.512615462521!2d71.6845353!3d29.3845347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9090a986dc49%3A0xf3091f4061659b77!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1707218654321!5m2!1sen!2spk" 
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
-                </div>
-            </div>
-            </section>
+            <p style="font-size: 1.5rem; color: var(--gold);">MARCH 27, 2026 • 2:00 PM</p>
+            <p><strong>Four Seasons Restaurant</strong><br>Bahawalpur</p>
+        </div>
     </div>
 
     <script>
-        function revealInvitation() {
-            const overlay = document.getElementById('overlay');
-            const content = document.getElementById('main-content');
-            
-            overlay.style.opacity = '0';
+        function startExperience() {
+            document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
-                overlay.style.display = 'none';
-                content.style.display = 'block';
-                // Trigger the fade-in animation
-                setTimeout(() => { content.style.opacity = '1'; }, 50);
-                updateCountdown();
-            }, 800);
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('main-invitation').style.display = 'block';
+                document.body.style.overflow = 'auto';
+            }, 1000);
         }
-
-        const targetDate = new Date("March 27, 2026 14:00:00").getTime();
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            document.getElementById("days").innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-            document.getElementById("hours").innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            document.getElementById("mins").innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-        }
-        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
