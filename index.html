@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception - Hafiz Muhammad Abdullah</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Abdullah's Reception</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.9); }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow-x: hidden; }
+        :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.95); }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
         /* Start Screen */
         #overlay {
@@ -16,95 +16,83 @@
             justify-content: center; align-items: center; z-index: 2000; transition: 1s ease;
         }
 
-        /* Main Invitation Wrapper with new Wedding Background */
+        /* Arabic Bismillah Styling */
+        .arabic { font-family: 'Amiri', serif; font-size: 2.5rem; margin-bottom: 20px; color: #1a1a1a; }
+
+        /* Main Invitation - Now fits perfectly on one screen */
         #invitation-container { 
-            display: none; 
-            min-height: 100vh;
-            width: 100%;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('Wedding_Bg.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            box-sizing: border-box;
-            opacity: 0;
-            transition: opacity 2s ease;
+            display: none; height: 100vh; width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Wedding_Bg.webp');
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: center; position: relative;
         }
 
-        /* Four Corner GIFs */
-        .corner-gif { position: fixed; width: clamp(70px, 12vw, 130px); z-index: 100; pointer-events: none; }
-        .g1 { top: 10px; left: 10px; }     /* love.gif */
-        .g2 { top: 10px; right: 10px; }    /* wedding.gif */
-        .g3 { bottom: 10px; left: 10px; }  /* wedding-date.gif */
-        .g4 { bottom: 10px; right: 10px; } /* Just Married Dance GIF */
+        /* Animated Corner GIFs */
+        .corner-gif { position: absolute; width: clamp(70px, 15vw, 120px); opacity: 0; transition: all 1s ease-out; z-index: 100; }
+        .g1 { top: -100px; left: -100px; }     /* love.gif */
+        .g2 { top: -100px; right: -100px; }    /* wedding.gif */
+        .g3 { bottom: -100px; left: -100px; }  /* wedding-date.gif */
+        .g4 { bottom: -100px; right: -100px; } /* Just Married Dance */
 
-        /* Content Card with Animation */
+        /* Trigger Positions */
+        .animate-gifs .g1 { top: 10px; left: 10px; opacity: 1; }
+        .animate-gifs .g2 { top: 10px; right: 10px; opacity: 1; }
+        .animate-gifs .g3 { bottom: 10px; left: 10px; opacity: 1; }
+        .animate-gifs .g4 { bottom: 10px; right: 10px; opacity: 1; }
+
+        /* Compact Card for Single Page Fit */
         .content-card {
             background: var(--glass);
-            padding: 40px 30px;
-            border-radius: 25px;
-            max-width: 600px;
-            width: 95%;
+            padding: 20px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
             text-align: center;
             border: 3px solid var(--gold);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            margin: auto;
-            opacity: 0;
-            transform: translateY(30px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            z-index: 10;
         }
 
-        .show-card { animation: fadeInUp 1.5s forwards ease-out; }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 { font-family: 'Playfair Display', serif; color: #1a1a1a; margin-bottom: 20px; font-size: clamp(1rem, 4vw, 1.4rem); line-height: 1.4; }
-        h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 7vw, 3.2rem); margin: 10px 0; color: #000; }
+        h1 { font-family: 'Bubblegum Sans', cursive; font-size: 2.2rem; margin: 10px 0; color: #000; }
+        .fun-urdu { font-weight: 600; color: #444; font-size: 1rem; margin-bottom: 10px; }
         
-        .map-frame { 
-            width: 100%; height: 250px; border-radius: 15px; 
-            margin-top: 25px; border: 2px solid var(--gold); 
-        }
+        .map-frame { width: 100%; height: 180px; border-radius: 12px; margin-top: 15px; border: 1px solid #ddd; }
 
         .btn {
-            background: var(--gold); color: white; padding: 15px 45px;
-            border-radius: 50px; font-weight: bold; cursor: pointer; border: none;
-            font-size: 1.1rem; letter-spacing: 1px; transition: 0.3s;
+            background: var(--gold); color: white; padding: 12px 35px;
+            border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
         }
-        .btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <h2 style="margin-bottom: 30px; text-align: center; padding: 0 20px;">BISMILLAH-IR-RAHMAN-IR-RAHIM</h2>
+        <div class="arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
+        <img src="love.gif" style="position:absolute; top:10px; left:10px; width:60px;">
+        <img src="wedding.gif" style="position:absolute; top:10px; right:10px; width:60px;">
     </div>
 
     <audio id="music" loop>
         <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="invitation-container">
+    <div id="main-invitation">
         <img src="love.gif" class="corner-gif g1">
         <img src="wedding.gif" class="corner-gif g2">
         <img src="wedding-date.gif" class="corner-gif g3">
         <img src="Just Married Dance GIF by Animanias.gif" class="corner-gif g4">
 
-        <div class="content-card" id="card">
-            <h2>Khushion bhray is safar mein aap ki shirkat hamaray liye baais-e-musarrat hogi.</h2>
-            <p style="letter-spacing: 4px; color: #666; font-size: 0.8rem; font-weight: bold;">RECEPTION OF</p>
+        <div class="content-card">
+            <p class="fun-urdu">Tayyar ho jayein! Abdullah ki reception party mein dhoom machanay ke liye aap sab invited hain! ❤️</p>
+            <p style="letter-spacing: 2px; color: #888; font-size: 0.7rem;">OUR GROOM</p>
             <h1>Hafiz Muhammad Abdullah</h1>
-            <p style="font-size: 1.4rem; color: var(--gold); font-weight: bold; margin: 10px 0;">MARCH 27, 2026 • 2:00 PM</p>
-            <p style="font-weight: 600;">Four Seasons Restaurant, Bahawalpur</p>
+            <p style="font-size: 1.2rem; color: var(--gold); font-weight: bold; margin: 5px 0;">27 MARCH 2026 • 2:00 PM</p>
+            <p style="font-size: 0.9rem; margin: 0;"><b>Four Seasons Restaurant, Bahawalpur</b></p>
 
             <iframe 
                 class="map-frame"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353342045618!2d71.6911679!3d29.3906939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b90947623910b%3A0xc3b5e434850c90f8!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1700000000000" 
+                src="https://maps.google.com/?cid=17512562987375104887&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" 
                 allowfullscreen="" loading="lazy">
             </iframe>
         </div>
@@ -112,23 +100,20 @@
 
     <script>
         function startInvitation() {
-            // Start Music triggered by user interaction
             const audio = document.getElementById('music');
-            audio.play().catch(e => console.log("Audio playback requires manual interaction."));
+            audio.play().catch(e => console.log("Music play blocked"));
 
             const overlay = document.getElementById('overlay');
-            const container = document.getElementById('invitation-container');
-            const card = document.getElementById('card');
+            const container = document.getElementById('main-invitation');
             
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
                 container.style.display = 'flex';
-                // Trigger animations
-                setTimeout(() => { 
-                    container.style.opacity = '1'; 
-                    card.classList.add('show-card');
-                }, 100);
+                // Delay the GIF entrance for a cool effect
+                setTimeout(() => {
+                    container.classList.add('animate-gifs');
+                }, 500);
             }, 1000);
         }
     </script>
