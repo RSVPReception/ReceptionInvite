@@ -7,7 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.95); }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
+        
+        /* Basic Reset */
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; 
+        }
 
         /* Start Screen */
         #overlay {
@@ -16,83 +21,90 @@
             justify-content: center; align-items: center; z-index: 2000; transition: 1s ease;
         }
 
-        /* Arabic Bismillah Styling */
-        .arabic { font-family: 'Amiri', serif; font-size: 2.5rem; margin-bottom: 20px; color: #1a1a1a; }
+        .arabic { font-family: 'Amiri', serif; font-size: clamp(1.5rem, 8vw, 2.5rem); margin-bottom: 20px; color: #1a1a1a; }
 
-        /* Main Invitation - Now fits perfectly on one screen */
+        /* Main Invitation Container - FIXED CENTERING */
         #invitation-container { 
             display: none; height: 100vh; width: 100%;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Wedding_Bg.webp');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('Wedding_Bg.webp');
             background-size: cover; background-position: center;
-            display: flex; justify-content: center; align-items: center; position: relative;
+            position: relative; flex-direction: column; justify-content: center; align-items: center;
         }
 
-        /* Animated Corner GIFs */
-        .corner-gif { position: absolute; width: clamp(70px, 15vw, 120px); opacity: 0; transition: all 1s ease-out; z-index: 100; }
-        .g1 { top: -100px; left: -100px; }     /* love.gif */
-        .g2 { top: -100px; right: -100px; }    /* wedding.gif */
-        .g3 { bottom: -100px; left: -100px; }  /* wedding-date.gif */
-        .g4 { bottom: -100px; right: -100px; } /* Just Married Dance */
+        /* Corner GIFs - Setup for Entrance Animation */
+        .corner-gif { position: absolute; width: clamp(60px, 15vw, 110px); opacity: 0; transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; }
+        
+        /* Initial Hidden Positions */
+        .g1 { top: -150px; left: -150px; }     /* love.gif */
+        .g2 { top: -150px; right: -150px; }    /* wedding.gif */
+        .g3 { bottom: -150px; left: -150px; }  /* wedding-date.gif */
+        .g4 { bottom: -150px; right: -150px; } /* Just Married Dance */
 
-        /* Trigger Positions */
-        .animate-gifs .g1 { top: 10px; left: 10px; opacity: 1; }
-        .animate-gifs .g2 { top: 10px; right: 10px; opacity: 1; }
-        .animate-gifs .g3 { bottom: 10px; left: 10px; opacity: 1; }
-        .animate-gifs .g4 { bottom: 10px; right: 10px; opacity: 1; }
+        /* Animation Trigger */
+        .animate-content .g1 { top: 10px; left: 10px; opacity: 1; }
+        .animate-content .g2 { top: 10px; right: 10px; opacity: 1; }
+        .animate-content .animate-content .g3 { bottom: 10px; left: 10px; opacity: 1; }
+        .animate-content .g4 { bottom: 10px; right: 10px; opacity: 1; }
 
-        /* Compact Card for Single Page Fit */
+        /* Content Card */
         .content-card {
             background: var(--glass);
-            padding: 20px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
+            padding: 25px; border-radius: 20px;
+            width: 85%; max-width: 420px; text-align: center;
             border: 3px solid var(--gold);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            z-index: 10;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            z-index: 10; transform: scale(0.8); opacity: 0; transition: 1s ease;
         }
-
-        h1 { font-family: 'Bubblegum Sans', cursive; font-size: 2.2rem; margin: 10px 0; color: #000; }
-        .fun-urdu { font-weight: 600; color: #444; font-size: 1rem; margin-bottom: 10px; }
         
-        .map-frame { width: 100%; height: 180px; border-radius: 12px; margin-top: 15px; border: 1px solid #ddd; }
+        .animate-content .content-card { transform: scale(1); opacity: 1; }
+
+        h1 { font-family: 'Bubblegum Sans', cursive; font-size: clamp(1.8rem, 6vw, 2.5rem); margin: 10px 0; color: #000; }
+        .fun-urdu { font-weight: 600; color: #333; font-size: 1rem; line-height: 1.4; }
+        
+        /* Map Adjustments */
+        .map-frame { width: 100%; height: 200px; border-radius: 12px; margin-top: 15px; border: 1px solid #ddd; background: #eee; }
 
         .btn {
-            background: var(--gold); color: white; padding: 12px 35px;
-            border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
+            background: var(--gold); color: white; padding: 12px 40px;
+            border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;
         }
+        .btn:hover { transform: scale(1.05); }
+
+        /* Front Page GIF Decorations */
+        .front-decor { position: absolute; width: 60px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
     <div id="overlay">
+        <img src="love.gif" class="front-decor" style="top:10px; left:10px;">
+        <img src="wedding.gif" class="front-decor" style="top:10px; right:10px;">
+        
         <div class="arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
-        <img src="love.gif" style="position:absolute; top:10px; left:10px; width:60px;">
-        <img src="wedding.gif" style="position:absolute; top:10px; right:10px; width:60px;">
     </div>
 
     <audio id="music" loop>
         <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="main-invitation">
+    <div id="invitation-container">
         <img src="love.gif" class="corner-gif g1">
         <img src="wedding.gif" class="corner-gif g2">
         <img src="wedding-date.gif" class="corner-gif g3">
         <img src="Just Married Dance GIF by Animanias.gif" class="corner-gif g4">
 
         <div class="content-card">
-            <p class="fun-urdu">Tayyar ho jayein! Abdullah ki reception party mein dhoom machanay ke liye aap sab invited hain! ❤️</p>
-            <p style="letter-spacing: 2px; color: #888; font-size: 0.7rem;">OUR GROOM</p>
+            <p class="fun-urdu">Chalo bhai! Abdullah ki reception party hone wali hai, aur aap sab ka aana lazmi hai! ❤️</p>
+            <p style="letter-spacing: 2px; color: #888; font-size: 0.7rem; font-weight: bold; margin-bottom: 0;">OUR GROOM</p>
             <h1>Hafiz Muhammad Abdullah</h1>
-            <p style="font-size: 1.2rem; color: var(--gold); font-weight: bold; margin: 5px 0;">27 MARCH 2026 • 2:00 PM</p>
+            <p style="font-size: 1.3rem; color: var(--gold); font-weight: bold; margin: 5px 0;">27 MARCH 2026 • 2:00 PM</p>
             <p style="font-size: 0.9rem; margin: 0;"><b>Four Seasons Restaurant, Bahawalpur</b></p>
 
             <iframe 
                 class="map-frame"
-                src="https://maps.google.com/?cid=17512562987375104887&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353347087819!2d71.6888478753238!3d29.38917637516084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9d49a986dc49%3A0xf3091f4061659377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1715891234567!5m2!1sen!2s0" 
                 allowfullscreen="" loading="lazy">
             </iframe>
         </div>
@@ -100,21 +112,22 @@
 
     <script>
         function startInvitation() {
+            // Music Playback
             const audio = document.getElementById('music');
-            audio.play().catch(e => console.log("Music play blocked"));
+            audio.play().catch(e => console.log("Audio requires interaction"));
 
             const overlay = document.getElementById('overlay');
-            const container = document.getElementById('main-invitation');
+            const container = document.getElementById('invitation-container');
             
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
                 container.style.display = 'flex';
-                // Delay the GIF entrance for a cool effect
+                // Trigger the animations for GIFs and Card
                 setTimeout(() => {
-                    container.classList.add('animate-gifs');
-                }, 500);
-            }, 1000);
+                    container.classList.add('animate-content');
+                }, 100);
+            }, 800);
         }
     </script>
 </body>
