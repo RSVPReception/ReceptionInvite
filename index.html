@@ -3,34 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception - Hafiz Muhammad Abdullah</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Reception Party - Abdullah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --white: #ffffff; --glass: rgba(255, 255, 255, 0.9); }
+        :root { --fun-yellow: #f4d03f; --fun-pink: #ff6b6b; --white: #ffffff; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
-        /* Start Screen Styling */
+        /* Start Screen with Fun GIFs */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 2000; transition: 1s ease;
         }
-        
-        /* Desktop GIF sizes */
-        .gif-layer { position: absolute; pointer-events: none; z-index: 10; width: 180px; opacity: 0.8; }
-        .g1 { top: 0; left: 0; }
-        .g2 { top: 0; right: 0; }
-        .g3 { bottom: 0; left: 0; }
-        .g4 { bottom: 0; right: 0; }
-        .g5 { top: 40%; left: 0; }
-        .g6 { top: 40%; right: 0; }
-
-        /* Mobile Fix for GIFs and Text */
-        @media (max-width: 600px) {
-            .gif-layer { width: 90px; }
-            .g5, .g6 { display: none; }
-            h2.start-heading { font-size: 1.1rem; padding: 0 20px; z-index: 20; }
-        }
+        .decor-gif { position: absolute; width: clamp(80px, 20vw, 150px); pointer-events: none; }
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
 
         /* Slide System */
         #main-invitation { display: none; height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
@@ -41,50 +30,40 @@
             position: relative; overflow: hidden;
         }
         
-        .bg-webp { background-image: url('Bg Slides.webp'); background-repeat: no-repeat; }
-        .bg-final { background-image: url('Bg_Image.webp'); }
+        /* Animated Backgrounds using your GIFs */
+        .bg-wedding { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('wedding.gif'); }
+        .bg-love { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('love.gif'); }
+        .bg-date { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('wedding-date.gif'); }
 
-        /* High-Contrast Readable Text Boxes */
-        .text-box {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 85%;
-            border: 2px solid var(--gold);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px; border-radius: 30px; border: 4px solid var(--fun-yellow);
+            max-width: 80%; transform: rotate(-2deg); box-shadow: 10px 10px 0px var(--fun-pink);
         }
 
-        .animate-up { opacity: 0; transform: translateY(50px); transition: 1s ease-out; }
-        .active .animate-up { opacity: 1; transform: translateY(0); }
+        h2 { font-family: 'Bubblegum Sans', cursive; font-size: clamp(1.5rem, 6vw, 2.8rem); color: #333; margin: 0; }
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 8vw, 4rem); color: #1a1a1a; margin: 10px 0; }
 
-        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 4vw, 2.2rem); color: #1a1a1a; line-height: 1.5; margin: 0; }
-        
         .btn {
-            background-color: var(--gold); color: white; padding: 18px 50px;
+            background: var(--fun-yellow); color: #000; padding: 20px 50px;
             border-radius: 50px; font-weight: bold; cursor: pointer; border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 2001; font-size: 1.1rem;
+            box-shadow: 5px 5px 0px #000; font-size: 1.2rem; transition: 0.2s;
         }
+        .btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px #000; }
 
-        .map-frame { 
-            width: 90%; max-width: 900px; height: 400px; border-radius: 25px; 
-            overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 3px solid var(--gold);
-        }
+        .map-frame { width: 90%; max-width: 850px; height: 380px; border-radius: 30px; border: 5px solid var(--fun-yellow); }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <img src="balloons.gif" class="gif-layer g1">
-        <img src="audiences.gif" class="gif-layer g2">
-        <img src="confetti.gif" class="gif-layer g3">
-        <img src="confetti (1).gif" class="gif-layer g4">
-        <img src="confetti (2).gif" class="gif-layer g5">
-        <img src="confetti (3).gif" class="gif-layer g6">
+        <img src="love.gif" class="decor-gif top-left">
+        <img src="wedding.gif" class="decor-gif top-right">
+        <img src="wedding-date.gif" class="decor-gif bottom-left">
+        <img src="love.gif" class="decor-gif bottom-right">
         
-        <h2 class="start-heading" style="margin-bottom: 40px; color: #1a1a1a; letter-spacing: 2px; text-align: center;">
-            BISMILLAH-IR-RAHMAN-IR-RAHIM
-        </h2>
-        <button class="btn" onclick="startExperience()">Open Invitation</button>
+        <h2 style="margin-bottom: 40px; color: #1a1a1a;">Tayyar Ho Jayein! 🕺✨</h2>
+        <button class="btn" onclick="startExperience()">Open the Fun!</button>
     </div>
 
     <audio id="invite-music" loop>
@@ -92,45 +71,44 @@
     </audio>
 
     <div id="main-invitation">
-        <div class="slide bg-webp active">
-            <div class="text-box animate-up">
-                <h2>Khushion bhray is safar mein aap ki shirkat hamaray liye baais-e-musarrat hogi.</h2>
+        <div class="slide bg-wedding">
+            <div class="glass-card">
+                <h2>Bismillah! ❤️ Sab ki shirkat hamari khushion ko char chand laga degi!</h2>
             </div>
         </div>
 
-        <div class="slide bg-webp">
-            <div class="text-box animate-up">
-                <h2>Mohabbat aur duaon ke sath, hum aapko Abdullah ki reception par madu kartay hain.</h2>
+        <div class="slide bg-love">
+            <div class="glass-card" style="transform: rotate(2deg);">
+                <h2>Hafiz Muhammad Abdullah ki Reception hai! Shor o gul aur dhoom dham lazmi hai! 🎉</h2>
             </div>
         </div>
 
-        <div class="slide bg-final">
-            <div class="text-box animate-up">
-                <p style="letter-spacing: 4px; font-size: 0.8rem; color: #666;">WEDDING RECEPTION</p>
-                <h1 style="font-family: 'Playfair Display'; font-size: clamp(1.8rem, 6vw, 3.5rem); margin: 10px 0; color: #1a1a1a;">Hafiz Muhammad Abdullah</h1>
-                <p style="font-size: 1.4rem; color: var(--gold); font-weight: bold;">MARCH 27, 2026 • 2:00 PM</p>
+        <div class="slide bg-date">
+            <div class="glass-card">
+                <p style="font-weight: bold; letter-spacing: 2px;">RECEPTION PARTY</p>
+                <h1>Abdullah Khalid</h1>
+                <p style="font-size: 1.8rem; color: var(--fun-pink); font-weight: bold;">27 MARCH 2026 • 2:00 PM</p>
             </div>
         </div>
 
-        <div class="slide bg-webp">
-            <div class="text-box animate-up" style="margin-bottom: 20px; padding: 10px 30px;">
-                <h2 style="font-size: 1.5rem;">Location & Venue</h2>
-            </div>
-            <div class="animate-up map-frame">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353386000109!2d71.68884687508685!3d29.38918987526017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9d49a986dc49%3A0xf3091f4061259377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1738870000000!5m2!1sen!2spk" 
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
-            </div>
-            <p class="animate-up" style="margin-top: 15px; font-weight: bold; background: white; padding: 5px 15px; border-radius: 10px; border: 1px solid var(--gold);">Four Seasons Restaurant, Bahawalpur</p>
+        <div class="slide" style="background-color: #fdfdfd;">
+            <h2 style="margin-bottom: 20px;">Idhar Aa Jayein! 📍</h2>
+            <iframe 
+                class="map-frame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.51606828456!2d71.6888463752669!3d29.384444375160863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b9d49a986dc49%3A0xf3091f4061659377!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1738936990393!5m2!1sen!2s" 
+                allowfullscreen="" loading="lazy">
+            </iframe>
+            <p style="margin-top: 15px; font-weight: bold;">Four Seasons Restaurant, Bahawalpur</p>
         </div>
     </div>
 
     <script>
         function startExperience() {
+            // Start Music
             const audio = document.getElementById('invite-music');
-            audio.play().catch(e => console.log("Music play blocked: ", e));
+            audio.play().catch(e => console.log("Music play failed:", e));
 
+            // Fade Overlay
             const overlay = document.getElementById('overlay');
             overlay.style.opacity = '0';
             setTimeout(() => {
@@ -138,15 +116,6 @@
                 document.getElementById('main-invitation').style.display = 'block';
             }, 1000);
         }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-                else entry.target.classList.remove('active');
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
     </script>
 </body>
 </html>
