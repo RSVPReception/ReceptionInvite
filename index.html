@@ -26,7 +26,7 @@
             position: relative; text-align: center; overflow: hidden;
         }
 
-        /* Slide 1: Video Background */
+        /* Slide 1: Wedding Invitation Video Background */
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
         .welcome-card { background: var(--glass); padding: 30px; border-radius: 20px; border: 3px solid var(--gold); max-width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
@@ -65,12 +65,12 @@
     <div id="main-container">
         <section class="slide">
             <video class="video-bg" autoplay loop muted playsinline>
-                <source src="Pakistani_Engagement_Cartoon_Video_Generation.mp4" type="video/mp4">
+                <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
                 <h1 style="font-family: 'Bubblegum Sans'; margin: 0;">Hafiz Muhammad Abdullah</h1>
-                <p style="font-weight: 600;">Chalo bhai! Reception ki dhoom machatay hain! ❤️</p>
-                <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">Scroll Down to Reveal ↓</p>
+                <p style="font-weight: 600;">Tayyar ho jayein! Dhoom machanay ka waqt aa gaya hai! ❤️</p>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">Scroll Down ↓</p>
             </div>
         </section>
 
@@ -78,7 +78,7 @@
             <div class="welcome-card">
                 <h2 style="margin: 0;">Save The Date</h2>
                 <p style="color: var(--gold); font-weight: bold; font-size: 1.4rem; margin: 5px 0;">27 MARCH 2026</p>
-                <p style="font-size: 0.9rem;">Scratch the silver box to see the time left!</p>
+                <p style="font-size: 0.9rem;">Scratch the silver box to see the countdown!</p>
                 
                 <div class="scratch-box">
                     <div class="countdown-content">
@@ -98,7 +98,7 @@
             <div class="welcome-card">
                 <h2 style="margin: 0;">Venue & Location</h2>
                 <p style="margin: 10px 0;"><b>Four Seasons Restaurant, Bahawalpur</b></p>
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.33539556847!2d71.6912343!3d29.3900000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b90c497b7623d%3A0x6432092f698d9f1!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1707320000000!5m2!1sen!2spk" allowfullscreen="" loading="lazy"></iframe>
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.353386687002!2d71.69135017532398!3d29.389182375260124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b90f509995555%3A0xe993333333333333!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2spk!4v1700000000000!5m2!1sen!2spk" allowfullscreen="" loading="lazy"></iframe>
             </div>
             
             <img src="love.gif" class="decor-gif" style="top:20px; left:20px;">
@@ -119,20 +119,14 @@
             }, 1000);
         }
 
-        // Scratch-off Effect Logic
         function initScratch() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = 300;
             canvas.height = 200;
 
-            // Paint the "Silver Foil"
             ctx.fillStyle = '#C0C0C0'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            // Add some texture to the silver
-            ctx.fillStyle = '#b0b0b0';
-            for(let i=0; i<100; i++) { ctx.fillRect(Math.random()*300, Math.random()*200, 2, 2); }
-
             ctx.globalCompositeOperation = 'destination-out';
             let isDrawing = false;
 
@@ -150,11 +144,9 @@
             canvas.addEventListener('mouseup', () => isDrawing = false);
             canvas.addEventListener('mousemove', scratch);
             canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); });
-            canvas.addEventListener('touchend', () => isDrawing = false);
             canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); });
         }
 
-        // Countdown Logic
         function startCountdown() {
             const target = new Date("March 27, 2026 14:00:00").getTime();
             setInterval(() => {
