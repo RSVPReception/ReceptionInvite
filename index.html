@@ -26,7 +26,11 @@
         }
 
         /* Slide 1: Video Background */
-        .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; background: #000; }
+        /* Z-index fixed to ensure it stays behind but visible */
+        .video-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: 1; background: #000; 
+        }
         
         /* Slide 2: Scratch Reveal */
         .scratch-box { position: relative; width: 300px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
@@ -59,10 +63,9 @@
 
     <div id="main-container">
         <section class="slide">
-            <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto">
+            <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
                 <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
             </video>
-            <p style="position: absolute; bottom: 30px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px;">Scroll Down to Reveal ↓</p>
         </section>
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
@@ -83,16 +86,14 @@
             </div>
         </section>
 
-        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
+        <section class="slide" style="background: url('Bg Slides.webp') center/cover;">
             <div class="welcome-card">
                 <h2 style="margin: 0;">Venue & Location</h2>
                 <p style="margin: 10px 0;"><b>Four Seasons Restaurant, Bahawalpur</b></p>
                 <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3475.4623133649987!2d71.6918664!3d29.3860015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b90903337a77f%3A0xc3f173c38171129b!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            
             <img src="love.gif" class="decor-gif" style="top:20px; left:20px;">
             <img src="wedding.gif" class="decor-gif" style="top:20px; right:20px;">
-            <img src="wedding-date.gif" class="decor-gif" style="bottom:20px; left:20px;">
             <img src="Just Married Dance GIF by Animanias.gif" class="decor-gif" style="bottom:20px; right:20px; width:100px;">
         </section>
     </div>
@@ -100,12 +101,18 @@
     <script>
         function startInvitation() {
             const video = document.getElementById('inviteVideo');
-            video.play().catch(e => console.log("Autoplay blocked"));
+            
+            // Force play immediately on click
+            video.play().catch(e => console.log("Video still buffering or blocked:", e));
 
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
+                
+                // Play again to be sure
+                video.play();
+                
                 initScratch();
                 startCountdown();
             }, 1000);
