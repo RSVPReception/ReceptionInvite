@@ -26,9 +26,12 @@
         }
 
         /* Slide 1: Video */
-        .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; background: #000; }
+        .video-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: -1; background: #000; 
+        }
         
-        /* Slide 2: Split Scratch Date */
+        /* Slide 2: Scratch Date */
         .date-reveal-container { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 20px; }
         .scratch-part { position: relative; width: 100px; height: 100px; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .hidden-text { 
@@ -36,9 +39,8 @@
             display: flex; justify-content: center; align-items: center; 
             background: #fff; color: var(--gold); font-weight: bold; font-size: 1.2rem; z-index: 1;
         }
-        canvas { position: absolute; top: 0; left: 0; cursor: crosshair; z-index: 2; }
-
-        /* Slide 3: Solo Countdown */
+        
+        /* Slide 3: Countdown */
         .countdown-display { font-size: 2.5rem; color: var(--gold); font-weight: bold; display: flex; gap: 15px; }
         .countdown-label { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
 
@@ -58,81 +60,67 @@
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
     </div>
 
-    <audio id="music" loop muted>
-        <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="main-container">
         <section class="slide">
             <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
                 <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
             </video>
+            <p style="position: absolute; bottom: 30px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px;">Scroll Down ↓</p>
         </section>
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
                 <h2 style="margin: 0;">Save The Date</h2>
-                <p style="font-size: 0.9rem;">Scratch to reveal the Day, Month & Year!</p>
-                
+                <p style="font-size: 0.9rem;">Scratch to reveal!</p>
                 <div class="date-reveal-container">
-                    <div class="scratch-part">
-                        <div class="hidden-text">27</div>
-                        <canvas id="c-day" width="100" height="100"></canvas>
-                    </div>
-                    <div class="scratch-part">
-                        <div class="hidden-text" style="font-size: 1rem;">MARCH</div>
-                        <canvas id="c-month" width="100" height="100"></canvas>
-                    </div>
-                    <div class="scratch-part">
-                        <div class="hidden-text">2026</div>
-                        <canvas id="c-year" width="100" height="100"></canvas>
-                    </div>
+                    <div class="scratch-part"><div class="hidden-text">27</div><canvas id="c-day" width="100" height="100"></canvas></div>
+                    <div class="scratch-part"><div class="hidden-text" style="font-size: 1rem;">MARCH</div><canvas id="c-month" width="100" height="100"></canvas></div>
+                    <div class="scratch-part"><div class="hidden-text">2026</div><canvas id="c-year" width="100" height="100"></canvas></div>
                 </div>
             </div>
         </section>
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
-                <h2 style="margin-bottom: 20px;">Countdown to Big Day</h2>
+                <h2 style="margin-bottom: 20px;">Countdown</h2>
                 <div class="countdown-display">
-                    <div id="days">00</div> :
-                    <div id="hours">00</div> :
-                    <div id="mins">00</div>
+                    <div id="days">00</div> : <div id="hours">00</div> : <div id="mins">00</div>
                 </div>
-                <div class="countdown-label">Days &nbsp; Hours &nbsp; Mins</div>
+                <div class="countdown-label">Days   Hours   Mins</div>
             </div>
         </section>
 
-        <section class="slide" style="background: url('Bg Slides.webp') center/cover;">
+        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
                 <p style="font-size: 1.1rem; color: #444;">The celebration will take place at</p>
                 <h2 style="margin: 10px 0; color: var(--gold);">Four Seasons Restaurant</h2>
                 <p style="font-weight: bold; font-size: 0.9rem;">Bahawalpur</p>
                 <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3475.4623133649987!2d71.6918664!3d29.3860015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b90903337a77f%3A0xc3f173c38171129b!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            
-            <img src="love.gif" class="decor-gif" style="top:20px; left:20px;">
-            <img src="wedding.gif" class="decor-gif" style="top:20px; right:20px;">
             <img src="Just Married Dance GIF by Animanias.gif" class="decor-gif" style="bottom:20px; right:20px; width:100px;">
         </section>
-
     </div>
 
     <script>
         function startInvitation() {
             const video = document.getElementById('inviteVideo');
-            video.play().catch(e => console.log("Video Play Error:", e));
+            
+            // CRITICAL FIX: Play immediately on click, do not wait for timeout
+            if (video) {
+                video.play().catch(e => console.log("Video Error:", e));
+            }
 
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
                 
-                // Initialize 3 separate scratch pads
+                // Initialize Scratch Pads
                 initScratch('c-day');
                 initScratch('c-month');
                 initScratch('c-year');
                 
+                // Start Timer
                 startCountdown();
             }, 1000);
         }
@@ -140,16 +128,8 @@
         function initScratch(canvasId) {
             const canvas = document.getElementById(canvasId);
             const ctx = canvas.getContext('2d');
-            
-            // Paint Silver
-            ctx.fillStyle = '#C0C0C0'; 
-            ctx.fillRect(0, 0, 100, 100);
-            
-            // Add "Scratch Me" text or texture
-            ctx.fillStyle = '#999';
-            ctx.font = "12px Arial";
-            ctx.fillText("?", 45, 55);
-
+            ctx.fillStyle = '#C0C0C0'; ctx.fillRect(0, 0, 100, 100);
+            ctx.fillStyle = '#999'; ctx.font = "12px Arial"; ctx.fillText("?", 45, 55);
             ctx.globalCompositeOperation = 'destination-out';
             let isDrawing = false;
 
