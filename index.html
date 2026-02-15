@@ -110,7 +110,7 @@
                 <div class="countdown-display">
                     <div id="days">00</div> : <div id="hours">00</div> : <div id="mins">00</div>
                 </div>
-                <div class="countdown-label">Days &nbsp; Hours &nbsp; Mins</div>
+                <div class="countdown-label">Days   Hours   Mins</div>
             </div>
         </section>
 
@@ -129,9 +129,9 @@
         function startInvitation() {
             const video = document.getElementById('inviteVideo');
             
-            // 1. Force Play immediately
+            // 1. Force Play immediately (Muted)
+            video.muted = true; // Ensure mute is set
             video.play().catch(e => console.log("Auto-play blocked, waiting for user interaction.", e));
-            video.muted = false; // Optional: Try to unmute if browser allows
 
             // 2. Hide Overlay
             document.getElementById('overlay').style.opacity = '0';
@@ -153,8 +153,8 @@
         function forcePlayVideo() {
             const video = document.getElementById('inviteVideo');
             if (video.paused) {
+                video.muted = true; // Ensure it stays muted on force play
                 video.play();
-                video.muted = false; // Unmute on explicit click
             }
         }
 
