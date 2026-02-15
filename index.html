@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.95); }
-        /* Reset and Mobile Base */
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; -webkit-tap-highlight-color: transparent; }
 
         /* Start Screen */
@@ -24,7 +23,6 @@
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             position: relative; text-align: center; overflow: hidden;
-            /* Mobile padding safety */
             padding: 0 10px; box-sizing: border-box;
         }
 
@@ -33,7 +31,6 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; z-index: 0; background: #000; 
         }
-        /* Click Overlay */
         .play-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; cursor: pointer;
@@ -44,7 +41,6 @@
             display: flex; gap: 10px; justify-content: center; align-items: center; 
             flex-wrap: wrap; margin-top: 20px; z-index: 20; 
         }
-        /* Mobile-Friendly Scratch Card Size */
         .scratch-card { 
             position: relative; width: 85px; height: 85px; 
             background: #fff; border-radius: 12px; 
@@ -57,8 +53,12 @@
         }
         canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; touch-action: none; }
 
-        /* Slide 3: Countdown */
-        .countdown-display { font-size: clamp(2rem, 8vw, 3rem); color: var(--gold); font-weight: bold; display: flex; gap: 15px; }
+        /* Slide 3: Countdown - FIXED CENTERING */
+        .countdown-display { 
+            font-size: clamp(2rem, 8vw, 3rem); color: var(--gold); font-weight: bold; 
+            display: flex; justify-content: center; /* Centers items horizontally */
+            align-items: center; width: 100%; gap: 15px; 
+        }
         .countdown-label { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
 
         /* Slide 4: Venue & Map */
@@ -71,7 +71,7 @@
         .welcome-card { 
             background: var(--glass); padding: 25px; 
             border-radius: 20px; border: 2px solid var(--gold); 
-            width: 90%; max-width: 400px; /* Fits phone perfectly */
+            width: 90%; max-width: 400px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
             margin: auto;
         }
@@ -79,10 +79,8 @@
         .btn { background: var(--gold); color: white; padding: 15px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.2rem; transition: 0.3s; }
         .btn:hover { transform: scale(1.05); }
 
-        /* Decoration Position Fixes for Mobile */
-        .decor-gif { position: absolute; width: 80px; z-index: 10; pointer-events: none; }
         @media (max-width: 600px) {
-            .scratch-card { width: 80px; height: 80px; } /* Slightly smaller for narrow phones */
+            .scratch-card { width: 80px; height: 80px; } 
             h2 { font-size: 1.5rem !important; }
         }
     </style>
@@ -112,20 +110,10 @@
             <div class="welcome-card">
                 <h2 style="margin: 0; color: #333;">Save The Date</h2>
                 <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Scratch the boxes below!</p>
-                
                 <div class="date-reveal-container">
-                    <div class="scratch-card">
-                        <div class="hidden-text">27</div>
-                        <canvas id="c-day" width="85" height="85"></canvas>
-                    </div>
-                    <div class="scratch-card">
-                        <div class="hidden-text" style="font-size: 1rem;">MARCH</div>
-                        <canvas id="c-month" width="85" height="85"></canvas>
-                    </div>
-                    <div class="scratch-card">
-                        <div class="hidden-text">2026</div>
-                        <canvas id="c-year" width="85" height="85"></canvas>
-                    </div>
+                    <div class="scratch-card"><div class="hidden-text">27</div><canvas id="c-day" width="85" height="85"></canvas></div>
+                    <div class="scratch-card"><div class="hidden-text" style="font-size: 1rem;">MARCH</div><canvas id="c-month" width="85" height="85"></canvas></div>
+                    <div class="scratch-card"><div class="hidden-text">2026</div><canvas id="c-year" width="85" height="85"></canvas></div>
                 </div>
             </div>
         </section>
@@ -140,7 +128,7 @@
             </div>
         </section>
 
-        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
+        <section class="slide" style="background: url('Bg Slides.webp') center/cover;">
             <div class="welcome-card">
                 <p style="font-size: 1rem; color: #555;">The celebration will take place at</p>
                 <h2 style="margin: 10px 0; color: var(--gold); font-size: 1.8rem;">Four Seasons Restaurant</h2>
@@ -148,10 +136,9 @@
                 
                 <iframe 
                     class="map-frame"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.877237067822!2d71.67568537554556!3d29.37397777526774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b91a0c44f0b7f%3A0x6b6e4e5b5e5b5e5b!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1707321000000!5m2!1sen!2s"
+                    src="https://maps.google.com/maps?q=Four+Seasons+Restaurant+Bahawalpur&t=&z=13&ie=UTF8&iwloc=&output=embed"
                     allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
+                    loading="lazy">
                 </iframe>
             </div>
         </section>
@@ -161,63 +148,42 @@
     <script>
         function startInvitation() {
             const video = document.getElementById('inviteVideo');
-            
-            // 1. Force Play Muted
             video.muted = true;
             video.play().catch(e => console.log("Auto-play blocked, waiting for tap.", e));
 
-            // 2. Transition
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
-                
-                // 3. Init Mobile-Friendly Scratch
                 setupScratchCard('c-day', 85);
                 setupScratchCard('c-month', 85);
                 setupScratchCard('c-year', 85);
-                
                 startCountdown();
             }, 800);
         }
 
         function forcePlayVideo() {
             const video = document.getElementById('inviteVideo');
-            if (video.paused) {
-                video.muted = true;
-                video.play();
-            }
+            if (video.paused) { video.muted = true; video.play(); }
         }
 
         function setupScratchCard(canvasId, size) {
             const canvas = document.getElementById(canvasId);
-            // Ensure internal canvas resolution matches CSS size for crisp rendering on phones
-            canvas.width = size; 
-            canvas.height = size;
-            
+            canvas.width = size; canvas.height = size;
             const ctx = canvas.getContext('2d');
             
-            // Silver Layer
-            ctx.fillStyle = '#C0C0C0'; 
-            ctx.fillRect(0, 0, size, size);
-            
-            // Question Mark
-            ctx.fillStyle = '#999'; 
-            ctx.font = "bold 24px Arial"; 
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
+            ctx.fillStyle = '#C0C0C0'; ctx.fillRect(0, 0, size, size);
+            ctx.fillStyle = '#999'; ctx.font = "bold 24px Arial"; 
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
             ctx.fillText("?", size/2, size/2);
 
             ctx.globalCompositeOperation = 'destination-out';
             let isDrawing = false;
 
             function scratch(x, y) {
-                ctx.beginPath();
-                ctx.arc(x, y, 15, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 15, 0, Math.PI * 2); ctx.fill();
             }
 
-            // Mouse Events
             canvas.addEventListener('mousedown', (e) => { isDrawing = true; });
             canvas.addEventListener('mouseup', () => { isDrawing = false; });
             canvas.addEventListener('mousemove', (e) => {
@@ -226,7 +192,6 @@
                 scratch(e.clientX - rect.left, e.clientY - rect.top);
             });
 
-            // Touch Events (Critical for Mobile)
             canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); });
             canvas.addEventListener('touchend', () => { isDrawing = false; });
             canvas.addEventListener('touchmove', (e) => {
