@@ -16,7 +16,6 @@
             justify-content: center; align-items: center; z-index: 4000; transition: 1s ease;
         }
         .arabic { font-family: 'Amiri', serif; font-size: clamp(1.5rem, 8vw, 2.5rem); margin-bottom: 20px; }
-        .front-decor { position: absolute; width: clamp(50px, 10vw, 80px); }
 
         /* Slide System */
         #main-container { display: none; height: 100vh; width: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
@@ -26,10 +25,9 @@
             position: relative; text-align: center; overflow: hidden;
         }
 
-        /* Slide 1: Wedding Invitation Video Background */
+        /* Slide 1: Silent Video Background */
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-        .welcome-card { background: var(--glass); padding: 30px; border-radius: 20px; border: 3px solid var(--gold); max-width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-
+        
         /* Slide 2: Scratch Reveal */
         .scratch-box { position: relative; width: 300px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #scratch-canvas { position: absolute; top: 0; left: 0; cursor: crosshair; z-index: 2; border-radius: 15px; touch-action: none; }
@@ -44,34 +42,24 @@
         .map-frame { width: 90%; max-width: 700px; height: 350px; border-radius: 20px; border: 3px solid var(--gold); margin-top: 20px; background: #eee; }
 
         /* UI Elements */
-        .btn { background: var(--gold); color: white; padding: 12px 45px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.1rem; transition: 0.3s; }
-        .btn:hover { transform: scale(1.05); }
+        .welcome-card { background: var(--glass); padding: 30px; border-radius: 20px; border: 3px solid var(--gold); max-width: 85%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn { background: var(--gold); color: white; padding: 12px 45px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.1rem; }
         .decor-gif { position: absolute; width: 80px; z-index: 10; pointer-events: none; }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <img src="love.gif" class="front-decor" style="top:10px; left:10px;">
-        <img src="wedding.gif" class="front-decor" style="top:10px; right:10px;">
         <div class="arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
     </div>
 
-    <audio id="music" loop muted>
-        <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="main-container">
         <section class="slide">
-            <video class="video-bg" autoplay loop muted playsinline>
-                <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
+            <video id="inviteVideo" class="video-bg" loop muted playsinline>
+                <source src="Pakistani_Engagement_Cartoon_Video_Generation.mp4" type="video/mp4">
             </video>
-            <div class="welcome-card">
-                <h1 style="font-family: 'Bubblegum Sans'; margin: 0;">Hafiz Muhammad Abdullah</h1>
-                <p style="font-weight: 600;">Tayyar ho jayein! Dhoom machanay ka waqt aa gaya hai! ❤️</p>
-                <p style="font-size: 0.8rem; color: #666; margin-top: 15px;">Scroll Down ↓</p>
-            </div>
+            <p style="position: absolute; bottom: 30px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px;">Scroll Down to Reveal ↓</p>
         </section>
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
@@ -103,7 +91,6 @@
             
             <img src="love.gif" class="decor-gif" style="top:20px; left:20px;">
             <img src="wedding.gif" class="decor-gif" style="top:20px; right:20px;">
-            <img src="wedding-date.gif" class="decor-gif" style="bottom:20px; left:20px;">
             <img src="Just Married Dance GIF by Animanias.gif" class="decor-gif" style="bottom:20px; right:20px; width:100px;">
         </section>
     </div>
@@ -114,6 +101,7 @@
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
+                document.getElementById('inviteVideo').play(); // Start video after click
                 initScratch();
                 startCountdown();
             }, 1000);
@@ -122,9 +110,7 @@
         function initScratch() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = 300;
-            canvas.height = 200;
-
+            canvas.width = 300; canvas.height = 200;
             ctx.fillStyle = '#C0C0C0'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.globalCompositeOperation = 'destination-out';
@@ -135,9 +121,7 @@
                 const rect = canvas.getBoundingClientRect();
                 const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
                 const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-                ctx.beginPath();
-                ctx.arc(x, y, 30, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI * 2); ctx.fill();
             }
 
             canvas.addEventListener('mousedown', () => isDrawing = true);
