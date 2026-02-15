@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reception - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.95); }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; }
+        /* Reset and Mobile Base */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; -webkit-tap-highlight-color: transparent; }
 
         /* Start Screen */
         #overlay {
@@ -15,7 +16,7 @@
             background: #fff; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 5000; transition: 0.8s ease;
         }
-        .arabic { font-family: 'Amiri', serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 30px; }
+        .arabic { font-family: 'Amiri', serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 30px; text-align: center; }
 
         /* Slide System */
         #main-container { display: none; height: 100vh; width: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
@@ -23,6 +24,8 @@
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             position: relative; text-align: center; overflow: hidden;
+            /* Mobile padding safety */
+            padding: 0 10px; box-sizing: border-box;
         }
 
         /* Slide 1: Video */
@@ -30,40 +33,58 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; z-index: 0; background: #000; 
         }
-        /* Click Overlay to Force Play */
+        /* Click Overlay */
         .play-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            z-index: 10; cursor: pointer;
         }
         
         /* Slide 2: Scratch Date Cards */
         .date-reveal-container { 
-            display: flex; gap: 15px; justify-content: center; align-items: center; 
-            flex-wrap: wrap; margin-top: 25px; z-index: 20; 
+            display: flex; gap: 10px; justify-content: center; align-items: center; 
+            flex-wrap: wrap; margin-top: 20px; z-index: 20; 
         }
+        /* Mobile-Friendly Scratch Card Size */
         .scratch-card { 
-            position: relative; width: 100px; height: 100px; 
-            background: #fff; border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); overflow: hidden;
+            position: relative; width: 85px; height: 85px; 
+            background: #fff; border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); overflow: hidden;
         }
         .hidden-text { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             display: flex; justify-content: center; align-items: center; 
-            color: var(--gold); font-weight: 800; font-size: 1.4rem; z-index: 1;
+            color: var(--gold); font-weight: 800; font-size: 1.2rem; z-index: 1;
         }
         canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; touch-action: none; }
 
         /* Slide 3: Countdown */
-        .countdown-display { font-size: 3rem; color: var(--gold); font-weight: bold; display: flex; gap: 20px; }
+        .countdown-display { font-size: clamp(2rem, 8vw, 3rem); color: var(--gold); font-weight: bold; display: flex; gap: 15px; }
         .countdown-label { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
 
-        /* Slide 4: Venue */
-        .map-frame { width: 90%; max-width: 600px; height: 300px; border-radius: 20px; border: 4px solid var(--gold); margin-top: 20px; background: #eee; }
+        /* Slide 4: Venue & Map */
+        .map-frame { 
+            width: 100%; height: 250px; border-radius: 15px; 
+            border: 3px solid var(--gold); margin-top: 15px; background: #eee; 
+        }
 
-        /* UI Elements */
-        .welcome-card { background: var(--glass); padding: 40px; border-radius: 25px; border: 2px solid var(--gold); max-width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+        /* Responsive Card */
+        .welcome-card { 
+            background: var(--glass); padding: 25px; 
+            border-radius: 20px; border: 2px solid var(--gold); 
+            width: 90%; max-width: 400px; /* Fits phone perfectly */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
+            margin: auto;
+        }
+
         .btn { background: var(--gold); color: white; padding: 15px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.2rem; transition: 0.3s; }
         .btn:hover { transform: scale(1.05); }
+
+        /* Decoration Position Fixes for Mobile */
+        .decor-gif { position: absolute; width: 80px; z-index: 10; pointer-events: none; }
+        @media (max-width: 600px) {
+            .scratch-card { width: 80px; height: 80px; } /* Slightly smaller for narrow phones */
+            h2 { font-size: 1.5rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -73,32 +94,37 @@
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
     </div>
 
+    <audio id="music" loop muted>
+        <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="main-container">
         
         <section class="slide" onclick="forcePlayVideo()">
             <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
                 <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
             </video>
-            <div class="play-overlay"></div> <p style="position: absolute; bottom: 30px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.4); padding: 8px 20px; border-radius: 20px; z-index: 20;">Scroll Down ↓</p>
+            <div class="play-overlay"></div>
+            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Tap anywhere & Scroll ↓</p>
         </section>
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
-                <h2 style="margin: 0; font-size: 2rem;">Save The Date</h2>
-                <p style="font-size: 1rem; color: #666;">Scratch the boxes below!</p>
+                <h2 style="margin: 0; color: #333;">Save The Date</h2>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Scratch the boxes below!</p>
                 
                 <div class="date-reveal-container">
                     <div class="scratch-card">
                         <div class="hidden-text">27</div>
-                        <canvas id="c-day" width="100" height="100"></canvas>
+                        <canvas id="c-day" width="85" height="85"></canvas>
                     </div>
                     <div class="scratch-card">
-                        <div class="hidden-text" style="font-size: 1.1rem;">MARCH</div>
-                        <canvas id="c-month" width="100" height="100"></canvas>
+                        <div class="hidden-text" style="font-size: 1rem;">MARCH</div>
+                        <canvas id="c-month" width="85" height="85"></canvas>
                     </div>
                     <div class="scratch-card">
                         <div class="hidden-text">2026</div>
-                        <canvas id="c-year" width="100" height="100"></canvas>
+                        <canvas id="c-year" width="85" height="85"></canvas>
                     </div>
                 </div>
             </div>
@@ -106,7 +132,7 @@
 
         <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
-                <h2 style="margin-bottom: 20px;">Countdown to Big Day</h2>
+                <h2 style="margin-bottom: 20px; color: #333;">Countdown</h2>
                 <div class="countdown-display">
                     <div id="days">00</div> : <div id="hours">00</div> : <div id="mins">00</div>
                 </div>
@@ -114,12 +140,19 @@
             </div>
         </section>
 
-        <section class="slide" style="background: url('Bg Slides.webp') center/cover;">
+        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
             <div class="welcome-card">
-                <p style="font-size: 1.1rem; color: #444;">The celebration will take place at</p>
-                <h2 style="margin: 10px 0; color: var(--gold); font-size: 2rem;">Four Seasons Restaurant</h2>
-                <p style="font-weight: bold; font-size: 1rem;">Bahawalpur</p>
-                <iframe class="map-frame" src="https://www.google.com/maps/contrib/114334787938854617156/reviews5" allowfullscreen="" loading="lazy"></iframe>
+                <p style="font-size: 1rem; color: #555;">The celebration will take place at</p>
+                <h2 style="margin: 10px 0; color: var(--gold); font-size: 1.8rem;">Four Seasons Restaurant</h2>
+                <p style="font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">Bahawalpur</p>
+                
+                <iframe 
+                    class="map-frame"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.877237067822!2d71.67568537554556!3d29.37397777526774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393b91a0c44f0b7f%3A0x6b6e4e5b5e5b5e5b!2sFour%20Seasons%20Restaurant!5e0!3m2!1sen!2s!4v1707321000000!5m2!1sen!2s"
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </section>
 
@@ -129,47 +162,51 @@
         function startInvitation() {
             const video = document.getElementById('inviteVideo');
             
-            // 1. Force Play immediately (Muted)
-            video.muted = true; // Ensure mute is set
-            video.play().catch(e => console.log("Auto-play blocked, waiting for user interaction.", e));
+            // 1. Force Play Muted
+            video.muted = true;
+            video.play().catch(e => console.log("Auto-play blocked, waiting for tap.", e));
 
-            // 2. Hide Overlay
+            // 2. Transition
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
                 
-                // 3. Initialize Scratch Pads
-                setupScratchCard('c-day');
-                setupScratchCard('c-month');
-                setupScratchCard('c-year');
+                // 3. Init Mobile-Friendly Scratch
+                setupScratchCard('c-day', 85);
+                setupScratchCard('c-month', 85);
+                setupScratchCard('c-year', 85);
                 
-                // 4. Start Countdown
                 startCountdown();
             }, 800);
         }
 
-        // Helper to force play if it stalled
         function forcePlayVideo() {
             const video = document.getElementById('inviteVideo');
             if (video.paused) {
-                video.muted = true; // Ensure it stays muted on force play
+                video.muted = true;
                 video.play();
             }
         }
 
-        function setupScratchCard(canvasId) {
+        function setupScratchCard(canvasId, size) {
             const canvas = document.getElementById(canvasId);
+            // Ensure internal canvas resolution matches CSS size for crisp rendering on phones
+            canvas.width = size; 
+            canvas.height = size;
+            
             const ctx = canvas.getContext('2d');
             
-            // Fill with Silver
+            // Silver Layer
             ctx.fillStyle = '#C0C0C0'; 
-            ctx.fillRect(0, 0, 100, 100);
+            ctx.fillRect(0, 0, size, size);
             
-            // Add Texture/Text
+            // Question Mark
             ctx.fillStyle = '#999'; 
-            ctx.font = "bold 20px Arial"; 
-            ctx.fillText("?", 45, 55);
+            ctx.font = "bold 24px Arial"; 
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("?", size/2, size/2);
 
             ctx.globalCompositeOperation = 'destination-out';
             let isDrawing = false;
@@ -189,7 +226,7 @@
                 scratch(e.clientX - rect.left, e.clientY - rect.top);
             });
 
-            // Touch Events (Mobile)
+            // Touch Events (Critical for Mobile)
             canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); });
             canvas.addEventListener('touchend', () => { isDrawing = false; });
             canvas.addEventListener('touchmove', (e) => {
