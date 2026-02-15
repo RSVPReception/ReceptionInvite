@@ -26,7 +26,10 @@
         }
 
         /* Slide 1: Silent Video Background */
-        .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+        .video-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: -1; background: #000; 
+        }
         
         /* Slide 2: Scratch Reveal */
         .scratch-box { position: relative; width: 300px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
@@ -56,8 +59,9 @@
 
     <div id="main-container">
         <section class="slide">
-            <video id="inviteVideo" class="video-bg" loop muted playsinline>
+            <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto">
                 <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
             <p style="position: absolute; bottom: 30px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px;">Scroll Down to Reveal ↓</p>
         </section>
@@ -97,11 +101,24 @@
 
     <script>
         function startInvitation() {
+            const video = document.getElementById('inviteVideo');
+            
+            // Attempt to play immediately on click to satisfy browser policy
+            video.play().then(() => {
+                console.log("Video started successfully");
+            }).catch(error => {
+                console.error("Video play failed:", error);
+                // Fallback: Try playing again after transition
+            });
+
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
-                document.getElementById('inviteVideo').play(); // Start video after click
+                
+                // Secondary play command just in case
+                video.play(); 
+                
                 initScratch();
                 startCountdown();
             }, 1000);
@@ -145,4 +162,4 @@
         }
     </script>
 </body>
-</html>
+</html>S
