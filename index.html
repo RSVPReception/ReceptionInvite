@@ -7,18 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.85); }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #222; overflow: hidden; -webkit-tap-highlight-color: transparent; }
 
-        /* Start Screen */
+        /* Start Screen - Covers everything initially */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; z-index: 5000; transition: 0.5s ease;
+            justify-content: center; align-items: center; z-index: 5000; transition: opacity 0.8s ease;
         }
         .arabic { font-family: 'Amiri', serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 30px; text-align: center; }
 
-        /* Slide System */
-        #main-container { display: none; height: 100vh; width: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        /* Slide System - NOW VISIBLE BUT BEHIND OVERLAY */
+        #main-container { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100vh; 
+            overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; 
+            z-index: 1; /* Behind overlay */
+        }
+        
         .slide { 
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -29,15 +34,10 @@
         /* Video Backgrounds */
         .video-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: -1; background: #000; 
+            object-fit: cover; z-index: -1; 
+            background: #333; /* Fallback color if video loads slow */
         }
         
-        /* Slide 1 Click Overlay */
-        .play-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer;
-        }
-
         /* Cards & UI */
         .welcome-card { 
             background: var(--glass); padding: 25px; 
@@ -89,12 +89,11 @@
 
     <div id="main-container">
         
-        <section class="slide" onclick="forcePlayVideo()">
+        <section class="slide">
             <video id="vid1" class="video-bg" loop muted playsinline preload="auto">
                 <source src="Slide1_Video.mp4" type="video/mp4">
             </video>
-            <div class="play-overlay"></div>
-            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Tap & Scroll ↓</p>
+            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Scroll Down ↓</p>
         </section>
 
         <section class="slide">
@@ -141,38 +140,37 @@
 
     <script>
         function startInvitation() {
-            // 1. Un-hide the container FIRST so videos are technically "visible" to the browser
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('main-container').style.display = 'block';
-
-            // 2. NOW find and play all videos
+            // 1. Play Videos FIRST
             const videos = document.querySelectorAll('video');
             videos.forEach(video => {
-                video.muted = true; // Browser policy: must be true for auto-play
-                video.currentTime = 0; // Reset start time
-                
-                var playPromise = video.play();
+                video.muted = true; 
+                video.currentTime = 0;
+                // Force play
+                const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.then(_ => {
-                        console.log("Video started!");
+                        console.log("Video playing successfully");
                     })
                     .catch(error => {
-                        console.log("Autoplay blocked, waiting for interaction.");
+                        console.log("Autoplay prevented:", error);
                     });
                 }
             });
 
-            // 3. Initialize features
-            setupScratchCard('c-day', 85);
-            setupScratchCard('c-month', 85);
-            setupScratchCard('c-year', 85);
-            startCountdown();
-        }
-
-        // Backup force play if click misses first attempt
-        function forcePlayVideo() {
-            const vid1 = document.getElementById('vid1');
-            if (vid1.paused) { vid1.play(); }
+            // 2. Hide Overlay (Fade out)
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            
+            // 3. Remove overlay from DOM after transition
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                
+                // Initialize features
+                setupScratchCard('c-day', 85);
+                setupScratchCard('c-month', 85);
+                setupScratchCard('c-year', 85);
+                startCountdown();
+            }, 800);
         }
 
         function setupScratchCard(canvasId, size) {
