@@ -32,13 +32,7 @@
             object-fit: cover; z-index: -1; background: #000; 
         }
         
-        /* Slide 1 Click Overlay */
-        .play-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer;
-        }
-        
-        /* Cards */
+        /* Cards & UI */
         .welcome-card { 
             background: var(--glass); padding: 25px; 
             border-radius: 20px; border: 2px solid var(--gold); 
@@ -46,8 +40,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
             margin: auto;
         }
-
-        /* Scratch Cards */
         .date-reveal-container { 
             display: flex; gap: 10px; justify-content: center; align-items: center; 
             flex-wrap: wrap; margin-top: 20px; z-index: 20; 
@@ -63,20 +55,16 @@
             color: var(--gold); font-weight: 800; font-size: 1.2rem; z-index: 1;
         }
         canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; touch-action: none; }
-
-        /* Countdown */
+        
         .countdown-display { 
             font-size: clamp(2rem, 8vw, 3rem); color: var(--gold); font-weight: bold; 
             display: flex; justify-content: center; align-items: center; width: 100%; gap: 15px; 
         }
         .countdown-label { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
-
-        /* Venue Map */
         .map-frame { 
             width: 100%; height: 250px; border-radius: 15px; 
             border: 3px solid var(--gold); margin-top: 15px; background: #eee; 
         }
-
         .btn { background: var(--gold); color: white; padding: 15px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.2rem; transition: 0.3s; }
         .btn:hover { transform: scale(1.05); }
 
@@ -95,16 +83,15 @@
 
     <div id="main-container">
         
-        <section class="slide" onclick="forcePlayVideo()">
-            <video id="vid1" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
+        <section class="slide">
+            <video class="video-bg" loop muted playsinline preload="auto">
                 <source src="Slide1_Video.mp4" type="video/mp4">
             </video>
-            <div class="play-overlay"></div>
-            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Tap & Scroll ↓</p>
+            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Scroll Down ↓</p>
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
+            <video class="video-bg" loop muted playsinline preload="auto">
                 <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -119,7 +106,7 @@
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
+            <video class="video-bg" loop muted playsinline preload="auto">
                 <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -132,7 +119,7 @@
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
+            <video class="video-bg" loop muted playsinline preload="auto">
                 <source src="Venue_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -147,30 +134,31 @@
 
     <script>
         function startInvitation() {
-            // Select all videos and force play
+            // CRITICAL: Find ALL videos and force them to play immediately
+            // This bypasses browser blocks because it happens inside a click event
             const videos = document.querySelectorAll('video');
-            videos.forEach(vid => {
-                vid.muted = true; // Ensure mute again for browser policy
-                vid.play().catch(e => console.log("Video Play Error:", e));
+            
+            videos.forEach(video => {
+                video.muted = true; // Required for auto-play
+                video.play().then(() => {
+                    console.log("Video playing: " + video.currentSrc);
+                }).catch(error => {
+                    console.error("Video play failed:", error);
+                });
             });
 
+            // Transition UI
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
+                
+                // Initialize features
                 setupScratchCard('c-day', 85);
                 setupScratchCard('c-month', 85);
                 setupScratchCard('c-year', 85);
                 startCountdown();
             }, 800);
-        }
-
-        function forcePlayVideo() {
-            const vid1 = document.getElementById('vid1');
-            if (vid1.paused) { 
-                vid1.muted = true; 
-                vid1.play(); 
-            }
         }
 
         function setupScratchCard(canvasId, size) {
