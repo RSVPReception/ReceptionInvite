@@ -38,6 +38,15 @@
             z-index: 10; cursor: pointer;
         }
         
+        /* Cards */
+        .welcome-card { 
+            background: var(--glass); padding: 25px; 
+            border-radius: 20px; border: 2px solid var(--gold); 
+            width: 90%; max-width: 400px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
+            margin: auto;
+        }
+
         /* Scratch Cards */
         .date-reveal-container { 
             display: flex; gap: 10px; justify-content: center; align-items: center; 
@@ -68,15 +77,6 @@
             border: 3px solid var(--gold); margin-top: 15px; background: #eee; 
         }
 
-        /* Cards */
-        .welcome-card { 
-            background: var(--glass); padding: 25px; 
-            border-radius: 20px; border: 2px solid var(--gold); 
-            width: 90%; max-width: 400px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
-            margin: auto;
-        }
-
         .btn { background: var(--gold); color: white; padding: 15px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1.2rem; transition: 0.3s; }
         .btn:hover { transform: scale(1.05); }
 
@@ -96,7 +96,7 @@
     <div id="main-container">
         
         <section class="slide" onclick="forcePlayVideo()">
-            <video id="vid1" class="video-bg" loop muted playsinline preload="auto">
+            <video id="vid1" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
                 <source src="Slide1_Video.mp4" type="video/mp4">
             </video>
             <div class="play-overlay"></div>
@@ -104,7 +104,7 @@
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay>
+            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
                 <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -119,7 +119,7 @@
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay>
+            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
                 <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -132,7 +132,7 @@
         </section>
 
         <section class="slide">
-            <video class="video-bg" loop muted playsinline autoplay>
+            <video class="video-bg" loop muted playsinline autoplay poster="Wedding_Bg.webp">
                 <source src="Venue_Bg_Video.mp4" type="video/mp4">
             </video>
             <div class="welcome-card">
@@ -147,11 +147,11 @@
 
     <script>
         function startInvitation() {
-            // Trigger all videos to play
+            // Select all videos and force play
             const videos = document.querySelectorAll('video');
             videos.forEach(vid => {
-                vid.muted = true;
-                vid.play().catch(e => console.log("Auto-play blocked", e));
+                vid.muted = true; // Ensure mute again for browser policy
+                vid.play().catch(e => console.log("Video Play Error:", e));
             });
 
             document.getElementById('overlay').style.opacity = '0';
@@ -167,7 +167,10 @@
 
         function forcePlayVideo() {
             const vid1 = document.getElementById('vid1');
-            if (vid1.paused) { vid1.muted = true; vid1.play(); }
+            if (vid1.paused) { 
+                vid1.muted = true; 
+                vid1.play(); 
+            }
         }
 
         function setupScratchCard(canvasId, size) {
