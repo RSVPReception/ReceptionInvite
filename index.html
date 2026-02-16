@@ -6,7 +6,7 @@
     <title>Reception - Hafiz Muhammad Abdullah</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.95); }
+        :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.85); }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #000; overflow: hidden; -webkit-tap-highlight-color: transparent; }
 
         /* Start Screen */
@@ -26,17 +26,19 @@
             padding: 0 10px; box-sizing: border-box;
         }
 
-        /* Slide 1: Video */
+        /* Video Backgrounds */
         .video-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: 0; background: #000; 
+            object-fit: cover; z-index: -1; background: #000; 
         }
+        
+        /* Slide 1 Click Overlay */
         .play-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; cursor: pointer;
         }
         
-        /* Slide 2: Scratch Date Cards */
+        /* Scratch Cards */
         .date-reveal-container { 
             display: flex; gap: 10px; justify-content: center; align-items: center; 
             flex-wrap: wrap; margin-top: 20px; z-index: 20; 
@@ -53,21 +55,20 @@
         }
         canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; touch-action: none; }
 
-        /* Slide 3: Countdown - FIXED CENTERING */
+        /* Countdown */
         .countdown-display { 
             font-size: clamp(2rem, 8vw, 3rem); color: var(--gold); font-weight: bold; 
-            display: flex; justify-content: center; /* Centers items horizontally */
-            align-items: center; width: 100%; gap: 15px; 
+            display: flex; justify-content: center; align-items: center; width: 100%; gap: 15px; 
         }
         .countdown-label { font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
 
-        /* Slide 4: Venue & Map */
+        /* Venue Map */
         .map-frame { 
             width: 100%; height: 250px; border-radius: 15px; 
             border: 3px solid var(--gold); margin-top: 15px; background: #eee; 
         }
 
-        /* Responsive Card */
+        /* Cards */
         .welcome-card { 
             background: var(--glass); padding: 25px; 
             border-radius: 20px; border: 2px solid var(--gold); 
@@ -92,21 +93,20 @@
         <button class="btn" onclick="startInvitation()">Open Invitation</button>
     </div>
 
-    <audio id="music" loop muted>
-        <source src="fiikuri-ramadan-vibes-music-uplifting-promotion-beats-306195.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="main-container">
         
         <section class="slide" onclick="forcePlayVideo()">
-            <video id="inviteVideo" class="video-bg" loop muted playsinline preload="auto" poster="Wedding_Bg.webp">
-                <source src="Wedding_Invitation_Video_Creation.mp4" type="video/mp4">
+            <video id="vid1" class="video-bg" loop muted playsinline preload="auto">
+                <source src="Slide1_Video.mp4" type="video/mp4">
             </video>
             <div class="play-overlay"></div>
-            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Tap anywhere & Scroll ↓</p>
+            <p style="position: absolute; bottom: 40px; color: white; font-size: 0.9rem; background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 20px; z-index: 20;">Tap & Scroll ↓</p>
         </section>
 
-        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
+        <section class="slide">
+            <video class="video-bg" loop muted playsinline autoplay>
+                <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
+            </video>
             <div class="welcome-card">
                 <h2 style="margin: 0; color: #333;">Save The Date</h2>
                 <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Scratch the boxes below!</p>
@@ -118,7 +118,10 @@
             </div>
         </section>
 
-        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
+        <section class="slide">
+            <video class="video-bg" loop muted playsinline autoplay>
+                <source src="DateReveal_CountDown_Bg_Video.mp4" type="video/mp4">
+            </video>
             <div class="welcome-card">
                 <h2 style="margin-bottom: 20px; color: #333;">Countdown</h2>
                 <div class="countdown-display">
@@ -128,18 +131,15 @@
             </div>
         </section>
 
-        <section class="slide" style="background: url('Wedding_Bg.webp') center/cover;">
+        <section class="slide">
+            <video class="video-bg" loop muted playsinline autoplay>
+                <source src="Venue_Bg_Video.mp4" type="video/mp4">
+            </video>
             <div class="welcome-card">
                 <p style="font-size: 1rem; color: #555;">The celebration will take place at</p>
                 <h2 style="margin: 10px 0; color: var(--gold); font-size: 1.8rem;">Four Seasons Restaurant</h2>
                 <p style="font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">Bahawalpur</p>
-                
-                <iframe 
-                    class="map-frame"
-                    src="https://maps.google.com/maps?q=Four+Seasons+Restaurant+Bahawalpur&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+                <iframe class="map-frame" src="https://maps.google.com/maps?q=Four+Seasons+Restaurant+Bahawalpur&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </section>
 
@@ -147,9 +147,12 @@
 
     <script>
         function startInvitation() {
-            const video = document.getElementById('inviteVideo');
-            video.muted = true;
-            video.play().catch(e => console.log("Auto-play blocked, waiting for tap.", e));
+            // Trigger all videos to play
+            const videos = document.querySelectorAll('video');
+            videos.forEach(vid => {
+                vid.muted = true;
+                vid.play().catch(e => console.log("Auto-play blocked", e));
+            });
 
             document.getElementById('overlay').style.opacity = '0';
             setTimeout(() => {
@@ -163,8 +166,8 @@
         }
 
         function forcePlayVideo() {
-            const video = document.getElementById('inviteVideo');
-            if (video.paused) { video.muted = true; video.play(); }
+            const vid1 = document.getElementById('vid1');
+            if (vid1.paused) { vid1.muted = true; vid1.play(); }
         }
 
         function setupScratchCard(canvasId, size) {
