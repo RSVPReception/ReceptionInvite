@@ -9,7 +9,7 @@
         :root { --gold: #d4af37; --glass: rgba(255, 255, 255, 0.85); }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Poppins', sans-serif; background: #222; overflow: hidden; -webkit-tap-highlight-color: transparent; }
 
-        /* Start Screen - Covers everything initially */
+        /* Start Screen */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; display: flex; flex-direction: column; 
@@ -17,11 +17,11 @@
         }
         .arabic { font-family: 'Amiri', serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 30px; text-align: center; }
 
-        /* Slide System - NOW VISIBLE BUT BEHIND OVERLAY */
+        /* Slide System */
         #main-container { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh; 
             overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; 
-            z-index: 1; /* Behind overlay */
+            z-index: 1; 
         }
         
         .slide { 
@@ -35,7 +35,7 @@
         .video-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; z-index: -1; 
-            background: #333; /* Fallback color if video loads slow */
+            background: #333; 
         }
         
         /* Cards & UI */
@@ -104,7 +104,7 @@
                 <h2 style="margin: 0; color: #333;">Save The Date</h2>
                 <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Scratch the boxes below!</p>
                 <div class="date-reveal-container">
-                    <div class="scratch-card"><div class="hidden-text">27</div><canvas id="c-day" width="85" height="85"></canvas></div>
+                    <div class="scratch-card"><div class="hidden-text">28</div><canvas id="c-day" width="85" height="85"></canvas></div>
                     <div class="scratch-card"><div class="hidden-text" style="font-size: 1rem;">MARCH</div><canvas id="c-month" width="85" height="85"></canvas></div>
                     <div class="scratch-card"><div class="hidden-text">2026</div><canvas id="c-year" width="85" height="85"></canvas></div>
                 </div>
@@ -140,32 +140,20 @@
 
     <script>
         function startInvitation() {
-            // 1. Play Videos FIRST
             const videos = document.querySelectorAll('video');
             videos.forEach(video => {
                 video.muted = true; 
                 video.currentTime = 0;
-                // Force play
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log("Video playing successfully");
-                    })
-                    .catch(error => {
-                        console.log("Autoplay prevented:", error);
-                    });
+                    playPromise.then(_ => { console.log("Video playing"); }).catch(error => { console.log("Autoplay prevented"); });
                 }
             });
 
-            // 2. Hide Overlay (Fade out)
             const overlay = document.getElementById('overlay');
             overlay.style.opacity = '0';
-            
-            // 3. Remove overlay from DOM after transition
             setTimeout(() => {
                 overlay.style.display = 'none';
-                
-                // Initialize features
                 setupScratchCard('c-day', 85);
                 setupScratchCard('c-month', 85);
                 setupScratchCard('c-year', 85);
@@ -209,6 +197,7 @@
         }
 
         function startCountdown() {
+            // UPDATED DATE TO MARCH 28
             const target = new Date("March 28, 2026 14:00:00").getTime();
             setInterval(() => {
                 const now = new Date().getTime();
